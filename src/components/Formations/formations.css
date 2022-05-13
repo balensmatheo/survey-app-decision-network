@@ -1,0 +1,55 @@
+.formations {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 1em;
+    font-size: calc(10px + 3.3vw);
+}
+
+.formations-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.cards {
+    display: flex;
+    align-self: center;
+    width: 90%;
+    box-shadow:-3px 4px 5px 1px #bfbfbf;
+}
+
+.card-title {
+    display: flex;
+    align-items: flex-start;
+}
+
+.subscribe-btn {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    background-color: #bfffbc;
+    border: none;
+    box-shadow: -2px 2px 5px 2px whitesmoke;
+}
+
+.date {
+    display: flex;
+    margin-left: 1em;
+    flex: 1 1 auto;
+}
+
+.continue-form {
+    display: flex;
+    background-color: #d3d3d3;
+    border: none;
+    box-shadow: -2px 2px 5px 2px whitesmoke;
+}
+

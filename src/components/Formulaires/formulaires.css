@@ -1,0 +1,60 @@
+.formulaire-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+}
+
+
+
+.formulaire {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5em;
+    margin-left: 5em;
+}
+
+@media screen and (max-width: 1000px) {
+    .box-infos {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.formulaire input {
+    margin-bottom: 1em;
+}
+
+.personnal-infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    width: 50%;
+}
+
+@media screen and (max-width: 700px) {
+    .personnal-infos {
+        width: 100%;
+    }
+
+    .remarques {
+        width: 100%;
+    }
+}
+
+
+.form-title {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    padding: 3em 1em 1em;
+}
+
+.questions {
+    display: flex;
+    flex-direction: row;
+}
