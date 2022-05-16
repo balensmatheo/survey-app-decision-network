@@ -53,8 +53,3 @@
     flex-direction: row;
     padding: 3em 1em 1em;
 }
-
-.questions {
-    display: flex;
-    flex-direction: row;
-}

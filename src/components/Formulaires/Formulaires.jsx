@@ -4,12 +4,15 @@ import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} 
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
 import {DataStore} from "aws-amplify";
-import {Formation, Formulaire, Questions, Reponses} from "../../models";
+import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
 import Signature from "../Signature/Signature";
 import {Box, Checkbox, Fab, TextField, Tooltip} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import SchoolIcon from '@mui/icons-material/School';
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 const initialState = {nom: '', prenom: '', societe: '', commentaires: ''}
 
@@ -19,8 +22,19 @@ function Formulaires(props) {
 
     useEffect(() => {
         fetchQuestions();
+        fetchCategories();
     }, [])
 
+    const [categories, setCategories] = useState([])
+
+    async function fetchCategories(){
+        try {
+            const categories = await DataStore.query(Categorie);
+            setCategories(categories);
+        } catch (e) {
+            console.log(e)
+        }
+    }
     // On à passé l'objet de la formation en entier :)
     const {id, item} = state
 
@@ -180,15 +194,33 @@ function Formulaires(props) {
 
                                 </Box>
                             </div>
-                            <Collection items={questions}>
-                                {(item, index) => (
-                                    <Card className={"questions"} marginBottom={"1em"}
-                                          boxShadow={"-4px 4px 5px 1px whitesmoke"} key={index}>
-                                        <Heading fontWeight={500} marginRight={"2em"} flex={"1 1 auto"} level={5}>{item.titre}</Heading>
-                                        <Reponse id={item.id} user={props.user} getNote={getChildValue}/>
-                                    </Card>
-                                )}
-                            </Collection>
+
+                            <Flex width={"90%"} justifyContent={"center"}>
+                                <Tabs width={"100%"} spacing={"equal"}>
+                                    {
+                                        categories.map((categorie, index) => (
+                                            <TabItem width={"100%"} key={index} title={categorie.nom}>
+                                                <Collection width={"100%"} marginTop={"2em"} items={questions}>
+                                                    {(item, index) => (
+                                                        item.questionsCategorieId === categorie.id ?
+                                                            <Flex direction={"column"} width={"100%"} justifyContent={"center"} alignItems={"center"}>
+                                                                <Card width={"100%"} marginBottom={"1em"} boxShadow={"-4px 4px 5px 1px whitesmoke"} key={index}>
+                                                                    <Flex width={"100%"} direction={"row"}>
+                                                                        <Heading fontSize={"calc(5px + 2vmin)"} marginRight={"3em"} flex={"1 1 auto"} fontWeight={500} level={4}>{item.titre}</Heading>
+                                                                        <Reponse id={item.id} user={props.user} getNote={getChildValue}/>
+                                                                    </Flex>
+                                                                </Card>
+                                                            </Flex>
+                                                            :
+                                                            undefined
+                                                    )}
+                                                </Collection>
+                                            </TabItem>
+                                        ))
+                                    }
+                                </Tabs>
+                            </Flex>
+
                             <Box className={"remarques"} sx={{
                                 display: 'flex',
                                 alignItems: 'flex-end',
@@ -205,7 +237,7 @@ function Formulaires(props) {
                                 />
                             </Box>
                             <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
-                                <Text>J'accepte que les données entrées ci-dessus soient stockées et traitées</Text>
+                                <Text fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées et traitées</Text>
                                 <Checkbox checked={checked} onChange={handleChange}/>
                             </Flex>
                             <Flex marginBottom={"2em"}>

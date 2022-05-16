@@ -4,9 +4,10 @@ import { schema } from './schema';
 
 
 
-const { Reponses, Questions, Formulaire, Formation } = initSchema(schema);
+const { Categorie, Reponses, Questions, Formulaire, Formation } = initSchema(schema);
 
 export {
+  Categorie,
   Reponses,
   Questions,
   Formulaire,

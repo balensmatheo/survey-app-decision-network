@@ -1,5 +1,64 @@
 export const schema = {
     "models": {
+        "Categorie": {
+            "name": "Categorie",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "nom": {
+                    "name": "nom",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Categories",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Reponses": {
             "name": "Reponses",
             "fields": {
@@ -129,6 +188,20 @@ export const schema = {
                         "associatedWith": "questionsID"
                     }
                 },
+                "Categorie": {
+                    "name": "Categorie",
+                    "isArray": false,
+                    "type": {
+                        "model": "Categorie"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": "id",
+                        "targetName": "questionsCategorieId"
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -144,6 +217,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "questionsCategorieId": {
+                    "name": "questionsCategorieId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -400,5 +480,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "b0a24f21db28bcf9f07f09f52ade33c1"
+    "version": "283b77cc760531a866b5c171111996bc"
 };

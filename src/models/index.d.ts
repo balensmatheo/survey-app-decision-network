@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type CategorieMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type ReponsesMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -18,6 +22,15 @@ type FormulaireMetaData = {
 
 type FormationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class Categorie {
+  readonly id: string;
+  readonly nom?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Categorie, CategorieMetaData>);
+  static copyOf(source: Categorie, mutator: (draft: MutableModel<Categorie, CategorieMetaData>) => MutableModel<Categorie, CategorieMetaData> | void): Categorie;
 }
 
 export declare class Reponses {
@@ -36,8 +49,10 @@ export declare class Questions {
   readonly id: string;
   readonly titre?: string | null;
   readonly Reponses?: (Reponses | null)[] | null;
+  readonly Categorie?: Categorie | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly questionsCategorieId?: string | null;
   constructor(init: ModelInit<Questions, QuestionsMetaData>);
   static copyOf(source: Questions, mutator: (draft: MutableModel<Questions, QuestionsMetaData>) => MutableModel<Questions, QuestionsMetaData> | void): Questions;
 }
