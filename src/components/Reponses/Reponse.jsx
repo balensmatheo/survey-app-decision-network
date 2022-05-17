@@ -30,8 +30,8 @@ export default function Reponse(props){
                 onChangeActive={(event, newHover) => {
                     setHover(newHover);
                 }}
-                icon={<Star sx={{color: getColor(hover)}}/>}
-                emptyIcon={<StarBorder/>}
+                icon={<Star sx={{color: getColor(hover) || getColor(rating)}}/>}
+
             />
         </div>
     )
