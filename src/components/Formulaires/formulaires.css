@@ -53,3 +53,38 @@
     flex-direction: row;
     padding: 3em 1em 1em;
 }
+
+.question-title {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+    font-size: calc(10px + 1.5vmin);
+    font-weight: 400;
+    margin-right: 3em;
+}
+
+.testicon {
+    opacity: 1;
+    animation: halo 1s normal 0s 2;
+}
+
+@keyframes halo {
+    0% {
+        transform: translateX(0px);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    40% {
+        transform: translateX(5px);
+    }
+    60% {
+        transform: translateX(-5px);
+    }
+    80% {
+        transform: translateX(5px);
+    }
+    100% {
+        transform: translateX(0px);
+    }
+}

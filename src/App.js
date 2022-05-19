@@ -17,6 +17,8 @@ import {
 
 import Formations from "./components/Formations/Formations"
 import Formulaires from "./components/Formulaires/Formulaires";
+import Success from "./components/Success/Success";
+import {useState} from "react";
 
 Amplify.configure(awsExports);
 
@@ -121,6 +123,7 @@ function App() {
                       <Routes>
                           <Route element={<Formations user={user}/>} path={"*"} component={Formations}/>
                           <Route path={"formulaire"} element={<Formulaires user={user}/>} component={Formulaires}/>
+                          <Route path={"formulaire/success"} element={<Success/>} component={Success}/>
                       </Routes>
                       <footer>
                               <a href={"https://decision-network.eu/"}>Decision Network ©</a>

@@ -3,16 +3,15 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
-import {DataStore} from "aws-amplify";
+import {DataStore, Storage} from "aws-amplify";
 import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
 import Signature from "../Signature/Signature";
-import {Box, Checkbox, Fab, TextField, Tooltip} from "@mui/material";
+import {Box, Checkbox, Fab, IconButton, TextField, Tooltip} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
-import SchoolIcon from '@mui/icons-material/School';
-import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import ReactLoading from "react-loading";
+import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const initialState = {nom: '', prenom: '', societe: '', commentaires: ''}
 
@@ -25,16 +24,20 @@ function Formulaires(props) {
         fetchCategories();
     }, [])
 
+    const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([])
 
-    async function fetchCategories(){
+    async function fetchCategories() {
         try {
+            setLoading(true)
             const categories = await DataStore.query(Categorie);
             setCategories(categories);
+            setLoading(false)
         } catch (e) {
             console.log(e)
         }
     }
+
     // On à passé l'objet de la formation en entier :)
     const {id, item} = state
 
@@ -50,8 +53,10 @@ function Formulaires(props) {
 
     async function fetchQuestions() {
         try {
+            setLoading(true);
             const questions = await DataStore.query(Questions);
             setQuestions(questions);
+            setLoading(false);
         } catch (e) {
             console.log(e, 'Erreur lors de la récupération des questions...');
         }
@@ -98,8 +103,10 @@ function Formulaires(props) {
         setnote(tabCopy);
     }
 
+
     async function createFormulaire() {
         try {
+            setLoading(true)
             if (!formState.nom || !formState.prenom) return
             const formulaire = {...formState};
             setFormulaires([...formulaires, formulaire])
@@ -114,7 +121,7 @@ function Formulaires(props) {
                 }
             ));
             if (notes.length > 0) {
-            for (const reponse of notes) {
+                for (const reponse of notes) {
                     await DataStore.save(new Reponses({
                         formationID: id,
                         questionsID: reponse.id,
@@ -123,17 +130,36 @@ function Formulaires(props) {
                     }));
                 }
             }
+            setLoading(false);
+            navigate("success")
+
         } catch (e) {
             console.log(e)
         }
     }
 
+    const [categorie, setCategorie] = useState(0);
+
     const [checked, setChecked] = useState(false);
     const handleChange = (event) => {
-      setChecked(event.target.checked);
+        setChecked(event.target.checked);
     };
 
     const [index, setIndex] = useState(0);
+
+    const [signature, setSignature] = useState("");
+
+    function getSignature(value) {
+        setSignature(value)
+    }
+
+    if (loading === true) {
+        return (
+            <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} width={"100%"} height={"100vh"}>
+                <ReactLoading type={"bubbles"} color={"black"}></ReactLoading>
+            </Flex>
+        )
+    }
 
     return (
         <>
@@ -144,16 +170,19 @@ function Formulaires(props) {
                         désinscrire ?</Button>
                 </div>
                 <Divider></Divider>
-                <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"} justifyContent={"flex-start"} spacing={"equal"}>
+                <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"} justifyContent={"flex-start"}
+                      spacing={"equal"}>
                     <TabItem title={"Satisfaction"}>
                         <div className={'formulaire'}>
-                            <Flex  width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"} alignItems={"flex-end"} paddingRight={"2em"}>
-                                <Fab color={"primary"} onClick={()=> setIndex(1)}>
+                            <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
+                                  alignItems={"flex-end"} paddingRight={"2em"}>
+                                <Fab color={"primary"} onClick={() => setIndex(1)}>
                                     <ArrowForwardIosIcon/>
                                 </Fab>
                             </Flex>
                             <div className={'personnal-infos'}>
-                                <Heading fontWeight={400} variation={"info"} textAlign={"center"} level={3} paddingBottom={"1em"} paddingTop={"1em"}>Informations
+                                <Heading fontWeight={400} variation={"info"} textAlign={"center"} level={3}
+                                         paddingBottom={"1em"} paddingTop={"1em"}>Informations
                                     personnelles</Heading>
                                 <Box
                                     sx={{
@@ -167,7 +196,7 @@ function Formulaires(props) {
                                     }}
                                 >
                                     <Flex direction={"row"} width={"100%"} justifyContent={"flex-end"} height={"100%"}>
-                                        <Tooltip title={"Entrez vos informations"} arrow>
+                                        <Tooltip title={"Merci de compléter vos informations"} arrow>
                                             <InfoIcon color={"info"}/>
                                         </Tooltip>
                                     </Flex>
@@ -197,27 +226,39 @@ function Formulaires(props) {
                                 </Box>
                             </div>
 
-                            <Flex width={"90%"} justifyContent={"center"}>
-                                <Tabs width={"100%"} spacing={"equal"}>
+                            <Flex width={"100%"} justifyContent={"center"}>
+                                <Tabs currentIndex={categorie} onChange={(i) => setCategorie(i)} width={"100%"}
+                                      spacing={"equal"} justifyContent={"center"}>
                                     {
                                         categories.map((categorie, index) => (
-                                            <TabItem width={"100%"} key={index} title={categorie.nom}>
-                                                <Collection width={"100%"} marginTop={"2em"} items={questions}>
-                                                    {(item, index) => (
-                                                        item.questionsCategorieId === categorie.id ?
-                                                            <Flex direction={"column"} width={"100%"} justifyContent={"center"} alignItems={"center"}>
-                                                                <Card width={"100%"} marginBottom={"1em"} boxShadow={"-4px 4px 5px 1px whitesmoke"} key={index}>
-                                                                    <Flex width={"100%"} direction={"row"}>
-                                                                        <Heading fontSize={"calc(5px + 2vmin)"} marginRight={"3em"} flex={"1 1 auto"} fontWeight={500} level={4}>{item.titre}</Heading>
-                                                                        <Reponse id={item.id} user={props.user} getNote={getChildValue}/>
+                                                <TabItem width={"100%"} key={index} title={
+                                                    <Text color={"black"}>{categorie.nom}</Text>
+                                                }>
+                                                    <Collection width={"100%"} marginTop={"2em"} items={questions}>
+                                                        {(item, index) => (
+                                                            item.questionsCategorieId === categorie.id ?
+                                                                <Card width={"100%"} marginBottom={"1em"}
+                                                                      boxShadow={"-4px 4px 5px 1px whitesmoke"}
+                                                                      key={index}>
+                                                                    <Flex direction={"row"} width={"100%"}
+                                                                          alignItems={"center"}>
+                                                                        <Flex flex={"1 1 auto"} alignSelf={"flex-start"}
+                                                                              justifyContent={"flex-start"}
+                                                                              alignItems={"center"}>
+                                                                            <h1 className={"question-title"}>{item.titre}</h1>
+                                                                        </Flex>
+                                                                        <Flex direction={"row"}
+                                                                              justifyContent={"flex-end"}>
+                                                                            <Reponse id={item.id} user={props.user}
+                                                                                     getNote={getChildValue}/>
+                                                                        </Flex>
                                                                     </Flex>
                                                                 </Card>
-                                                            </Flex>
-                                                            :
-                                                            undefined
-                                                    )}
-                                                </Collection>
-                                            </TabItem>
+                                                                :
+                                                                undefined
+                                                        )}
+                                                    </Collection>
+                                                </TabItem>
                                         ))
                                     }
                                 </Tabs>
@@ -239,30 +280,58 @@ function Formulaires(props) {
                                 />
                             </Box>
                             <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
-                                <Text fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées et traitées</Text>
+                                <Text fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
+                                    et traitées</Text>
                                 <Checkbox checked={checked} onChange={handleChange}/>
                             </Flex>
                             <Flex marginBottom={"2em"}>
                                 {
-                                    !formState.nom || !formState.prenom || !formState.societe || !checked ?
+                                    !formState.nom || !formState.prenom || !formState.societe || !checked  ?
                                         <Button disabled={true} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
                                             le formulaire</Button>
                                         :
-                                        <Button disabled={false} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
+                                        <Button disabled={false} marginBottom={"5em"}
+                                                onClick={() => createFormulaire()}>Envoyer
                                             le formulaire</Button>
                                 }
                             </Flex>
 
                         </div>
                     </TabItem>
-                        <TabItem title={"Signature"}>
-                            <Signature/>
-                            <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"} justifyContent={"flex-start"} alignItems={"center"}>
-                                <Fab color={"primary"} onClick={() => setIndex(0)}>
-                                    <ArrowBackIosNewIcon/>
-                                </Fab>
-                            </Flex>
-                        </TabItem>
+                    {
+                        signature === "" ?
+                            <TabItem title={
+                                <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
+                                    <Text>Signature</Text>
+                                    <Tooltip title={"Veuillez signer s.v.p"} arrow>
+                                        <NewReleasesIcon className={"testicon"} fontSize={"small"} sx={{color: "#0d8505"}}/>
+                                    </Tooltip>
+                                </Flex>
+                            }>
+                                <Signature getSignature={getSignature} user={props.user}/>
+                                <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
+                                      justifyContent={"flex-start"} alignItems={"center"}>
+                                    <Fab color={"primary"} onClick={() => setIndex(0)}>
+                                        <ArrowBackIosNewIcon/>
+                                    </Fab>
+                                </Flex>
+                            </TabItem>
+                            :
+                            <TabItem disabled={true} title={
+                                <Text color={"black"}>Signature</Text>
+                            }>
+                                <Signature getSignature={getSignature} user={props.user}/>
+
+                                <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
+                                      justifyContent={"flex-start"} alignItems={"center"}>
+                                    <Fab color={"primary"} onClick={() => setIndex(0)}>
+                                        <ArrowBackIosNewIcon/>
+                                    </Fab>
+                                </Flex>
+                            </TabItem>
+
+                    }
+
                 </Tabs>
             </div>
         </>

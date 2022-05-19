@@ -1,6 +1,6 @@
 {
   "api": {
-    "TEST26": {
+    "surveyappdn": {
       "service": "AppSync",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -23,20 +23,10 @@
     }
   },
   "auth": {
-    "test2632f57234": {
+    "surveyappdn2b09136d": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "test2632f57234CustomMessage",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false,
       "frontendAuthConfig": {
         "socialProviders": [],
@@ -60,11 +50,11 @@
       }
     }
   },
-  "function": {
-    "test2632f57234CustomMessage": {
-      "build": true,
+  "storage": {
+    "s3surveyappdnstorage7ce4cd01": {
+      "service": "S3",
       "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      "dependsOn": []
     }
   }
 }

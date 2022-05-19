@@ -1,6 +1,6 @@
 import Rating from "@mui/material/Rating";
 import React, {useState} from 'react'
-import {Star, StarBorder} from "@mui/icons-material";
+import {Star} from "@mui/icons-material";
 
 export default function Reponse(props){
 
@@ -10,9 +10,9 @@ export default function Reponse(props){
     const colors = {
         1: 'red',
         2: 'red',
-        3: 'orange',
-        4: 'orange',
-        5: 'green',
+        3: '#fa7457',
+        4: '#f6b45e',
+        5: '#00b11a',
     };
 
     function getColor(value) {
@@ -31,7 +31,6 @@ export default function Reponse(props){
                     setHover(newHover);
                 }}
                 icon={<Star sx={{color: getColor(hover) || getColor(rating)}}/>}
-
             />
         </div>
     )

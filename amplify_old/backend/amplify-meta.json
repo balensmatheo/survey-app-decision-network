@@ -1,0 +1,137 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-test26-staging-72338-authRole",
+      "UnauthRoleArn": "arn:aws:iam::030788213331:role/amplify-test26-staging-72338-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::030788213331:role/amplify-test26-staging-72338-authRole",
+      "Region": "eu-west-1",
+      "DeploymentBucketName": "amplify-test26-staging-72338-deployment",
+      "UnauthRoleName": "amplify-test26-staging-72338-unauthRole",
+      "StackName": "amplify-test26-staging-72338",
+      "StackId": "arn:aws:cloudformation:eu-west-1:030788213331:stack/amplify-test26-staging-72338/ca87a780-c531-11ec-8d66-0a9dcd729487",
+      "AmplifyAppId": "d2x2m3bg2slwp3",
+      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+    }
+  },
+  "api": {
+    "TEST26": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "bnfvo7xqcfgvnim6n4nsgvq2fu",
+        "GraphQLAPIEndpointOutput": "https://i6lj5gc4ljh3zcg24jc37hg5rm.appsync-api.eu-west-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-ey653f5xe5fqvnabusmzjtb64q"
+      },
+      "lastPushTimeStamp": "2022-05-18T10:33:11.162Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiTEST26"
+      }
+    }
+  },
+  "auth": {
+    "test2632f57234": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "test2632f57234CustomMessage",
+          "triggerProvider": "Cognito",
+          "attributes": [
+            "Arn",
+            "Name"
+          ]
+        }
+      ],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "eu-west-1_HgKGBub06",
+        "AppClientIDWeb": "64bfu4lopmo5p3qm3v93m9rl0m",
+        "AppClientID": "469aiuqo7kjj8fa0vtaefobg2r",
+        "IdentityPoolId": "eu-west-1:aa80c235-1af0-4680-9e6b-aaae18487875",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-west-1:030788213331:userpool/eu-west-1_HgKGBub06",
+        "IdentityPoolName": "test2632f57234_identitypool_32f57234__staging",
+        "UserPoolName": "test2632f57234_userpool_32f57234"
+      },
+      "lastPushTimeStamp": "2022-05-18T10:33:11.163Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/auth/test2632f57234-cloudformation-template.json",
+        "logicalId": "authtest2632f57234"
+      }
+    }
+  },
+  "function": {
+    "test2632f57234CustomMessage": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "output": {
+        "Region": "eu-west-1",
+        "Arn": "arn:aws:lambda:eu-west-1:030788213331:function:test2632f57234CustomMessage-staging",
+        "Name": "test2632f57234CustomMessage-staging",
+        "LambdaExecutionRole": "test2632f57234CustomMessage-staging"
+      },
+      "lastPushTimeStamp": "2022-05-18T10:33:11.165Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/function/test2632f57234CustomMessage-cloudformation-template.json",
+        "logicalId": "functiontest2632f57234CustomMessage"
+      },
+      "s3Bucket": {
+        "deploymentBucketName": "amplify-test26-staging-72338-deployment",
+        "s3Key": "amplify-builds/test2632f57234CustomMessage-5656356a782b53313265-build.zip"
+      }
+    }
+  },
+  "storage": {
+    "s3surveyappdecisionnetworkstorage6a470f66": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "survey-app-decision-network-storage-6a470f6672338-staging",
+        "Region": "eu-west-1"
+      },
+      "lastPushTimeStamp": "2022-05-18T10:33:13.953Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3surveyappdecisionnetworkstorage6a470f66"
+      }
+    }
+  }
+}

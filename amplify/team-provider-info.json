@@ -1,29 +1,19 @@
 {
-  "staging": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-test26-staging-72338-authRole",
-      "UnauthRoleArn": "arn:aws:iam::030788213331:role/amplify-test26-staging-72338-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::030788213331:role/amplify-test26-staging-72338-authRole",
+      "AuthRoleName": "amplify-surveyappdn-dev-123824-authRole",
+      "UnauthRoleArn": "arn:aws:iam::030788213331:role/amplify-surveyappdn-dev-123824-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::030788213331:role/amplify-surveyappdn-dev-123824-authRole",
       "Region": "eu-west-1",
-      "DeploymentBucketName": "amplify-test26-staging-72338-deployment",
-      "UnauthRoleName": "amplify-test26-staging-72338-unauthRole",
-      "StackName": "amplify-test26-staging-72338",
-      "StackId": "arn:aws:cloudformation:eu-west-1:030788213331:stack/amplify-test26-staging-72338/ca87a780-c531-11ec-8d66-0a9dcd729487",
-      "AmplifyAppId": "d2x2m3bg2slwp3",
-      "AuthTriggerTemplateURL": "https://s3.amazonaws.com/amplify-test26-staging-72338-deployment/amplify-cfn-templates/auth/auth-trigger-cloudformation-template.json"
+      "DeploymentBucketName": "amplify-surveyappdn-dev-123824-deployment",
+      "UnauthRoleName": "amplify-surveyappdn-dev-123824-unauthRole",
+      "StackName": "amplify-surveyappdn-dev-123824",
+      "StackId": "arn:aws:cloudformation:eu-west-1:030788213331:stack/amplify-surveyappdn-dev-123824/a750eda0-d696-11ec-9073-065488676cc3",
+      "AmplifyAppId": "d2odfhz01c7s6n"
     },
     "categories": {
       "auth": {
-        "test2632f57234": {}
-      },
-      "function": {
-        "test2632f57234CustomMessage": {
-          "REDIRECTURL": "",
-          "EMAILSUBJECT": "",
-          "EMAILMESSAGE": "",
-          "deploymentBucketName": "amplify-test26-staging-72338-deployment",
-          "s3Key": "amplify-builds/test2632f57234CustomMessage-5656356a782b53313265-build.zip"
-        }
+        "surveyappdn2b09136d": {}
       }
     }
   }
