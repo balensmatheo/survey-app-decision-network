@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
-import {DataStore, Storage} from "aws-amplify";
+import {Auth, DataStore, Storage} from "aws-amplify";
 import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
 import Signature from "../Signature/Signature";
 import {Box, Checkbox, Fab, IconButton, TextField, Tooltip} from "@mui/material";
@@ -70,7 +70,7 @@ function Formulaires(props) {
             // on tente de faire un update, pour supprimer l'email
             await DataStore.save(
                 Formation.copyOf(original, updated => {
-                    updated.participants = updated.participants.filter(participant => participant !== props.user.attributes.email);
+                    updated.participants = updated.participants.filter(participant => participant !== Auth.user.attributes.email);
                 }))
             navigate('*');
         } catch (e) {
@@ -116,7 +116,7 @@ function Formulaires(props) {
                     nom: formState.nom,
                     prenom: formState.prenom,
                     societe: formState.societe,
-                    email: props.user.attributes.email,
+                    email: Auth.user.attributes.email,
                     remarques: formState.commentaires,
                 }
             ));
@@ -126,7 +126,7 @@ function Formulaires(props) {
                         formationID: id,
                         questionsID: reponse.id,
                         rating: reponse.note,
-                        submitted_by: props.user.attributes.email,
+                        submitted_by: Auth.user.attributes.email,
                     }));
                 }
             }
@@ -249,7 +249,7 @@ function Formulaires(props) {
                                                                         </Flex>
                                                                         <Flex direction={"row"}
                                                                               justifyContent={"flex-end"}>
-                                                                            <Reponse id={item.id} user={props.user}
+                                                                            <Reponse id={item.id} user={Auth.user}
                                                                                      getNote={getChildValue}/>
                                                                         </Flex>
                                                                     </Flex>
@@ -308,7 +308,7 @@ function Formulaires(props) {
                                     </Tooltip>
                                 </Flex>
                             }>
-                                <Signature getSignature={getSignature} user={props.user}/>
+                                <Signature getSignature={getSignature} user={Auth.user}/>
                                 <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
                                       justifyContent={"flex-start"} alignItems={"center"}>
                                     <Fab color={"primary"} onClick={() => setIndex(0)}>
@@ -320,7 +320,7 @@ function Formulaires(props) {
                             <TabItem disabled={true} title={
                                 <Text color={"black"}>Signature</Text>
                             }>
-                                <Signature getSignature={getSignature} user={props.user}/>
+                                <Signature getSignature={getSignature} user={Auth.user}/>
 
                                 <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
                                       justifyContent={"flex-start"} alignItems={"center"}>

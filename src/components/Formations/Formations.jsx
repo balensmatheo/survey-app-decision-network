@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from "react";
 import "./formations.css";
-import {Auth, DataStore} from "aws-amplify";
+import { Auth, DataStore} from "aws-amplify";
 import {Formation} from "../../models";
 import {Badge, Button, Card, Collection, Divider, Flex, Heading} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import {useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
 
+
 function Formations(props) {
     useEffect(() => {
         fetchFormations();
     }, [])
+
     const navigate = useNavigate();
     const [formations, setFormations] = useState([]);
     const [loading, setLoading] = useState(true);
-
 
 
     // On récupère les formations, puis on les affiche dans une liste.
@@ -29,16 +30,18 @@ function Formations(props) {
     }
 
 
+
+
     async function subscribe(id_formation, item) {
         // Cette fonction ajoute l'utilisateur courant a la liste des participants de la formation.
         try {
             const original = await DataStore.query(Formation, id_formation);
-            if (original.participants.find(element => element === props.user.attributes.email)) {
+            if (original.participants.find(element => element === Auth.user.attributes.email)) {
                 alert('Vous êtes déjà inscrit dans cette formation')
             } else {
                 await DataStore.save(
                     Formation.copyOf(original, updated => {
-                        updated.participants.push(props.user.attributes.email);
+                        updated.participants.push(Auth.user.attributes.email);
                     })
                 )
                 navigate('formulaire', {state: {id: id_formation, item: item}});
@@ -69,8 +72,15 @@ function Formations(props) {
     } else
         return (
             <div className={"formations"}>
-                <Heading className={"welcome"} marginTop={"2em"} level={4}>Bonjour {props.user.attributes.email}, voici
-                    les formations disponibles</Heading>
+                {
+                    Auth.user != null || undefined?
+                        <Heading className={"welcome"} marginTop={"2em"} level={4}>Bonjour {Auth.user.attributes.email},
+                            voici les formations disponibles</Heading>
+                        :
+                        <Heading className={"welcome"} marginTop={"2em"} level={4}>Bienvenue, veuillez vous connecter
+                            afin de choisir votre formation</Heading>
+                }
+
                 <Divider paddingTop={"1em"} orientation={"horizontal"}></Divider>
                 <div className={"formations-container"}>
                     <Collection marginBottom={"2em"} paddingTop={"2em"} items={formations}>
@@ -108,17 +118,30 @@ function Formations(props) {
                                             <Badge className={"formation-length"} size={"small"}
                                                    variation={"success"}>{getDuree(item.date, item.date_fin)} jours</Badge>
                                         </Flex>
-                                        <Flex direction={"column"} alignItems={"center"} justifyContent={"center"}>
-                                            {
-                                                item.participants.find(participant => participant === props.user.attributes.email) ?
-                                                    <Button size={"small"} className={"continue-form"}
-                                                            onClick={() => navigateToForm(item)}>Continuer</Button>
-                                                    :
-                                                    <Button className={"subscribe-btn"}
-                                                            isDisabled={item.participants.find(participant => participant === props.user.attributes.email)}
-                                                            onClick={() => subscribe(item.id, item)}>S'inscrire</Button>
-                                            }
-                                        </Flex>
+                                        {
+                                             Auth.user !== null || undefined ?
+                                                <Flex direction={"column"} alignItems={"center"}
+                                                      justifyContent={"center"}>
+                                                    {
+                                                        item.participants.find(participant => participant === Auth.user.attributes.email) ?
+                                                            <Button size={"small"} className={"continue-form"}
+                                                                    onClick={() => navigateToForm(item)}>Continuer</Button>
+                                                            :
+                                                            <Button className={"subscribe-btn"}
+                                                                    isDisabled={item.participants.find(participant => participant === Auth.user.attributes.email)}
+                                                                    onClick={() => subscribe(item.id, item)}>S'inscrire</Button>
+                                                    }
+                                                </Flex>
+                                                :
+                                                <Flex direction={"column"} alignItems={"center"}
+                                                      justifyContent={"center"}>
+                                                    {
+                                                        <Button className={"subscribe-btn"}
+                                                                onClick={() => navigate("signIn")}>S'inscrire</Button>
+                                                    }
+                                                </Flex>
+                                        }
+
                                     </Flex>
                                 </Flex>
                             </Card>
