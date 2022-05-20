@@ -1,0 +1,10 @@
+{
+  "resourceName": "s3surveyappdnstoragec0dc004a",
+  "bucketName": "surveyappdn-storage-c0dc004a",
+  "policyUUID": "154090f8",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE"
+  ]
+}

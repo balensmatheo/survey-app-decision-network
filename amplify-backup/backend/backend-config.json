@@ -23,7 +23,7 @@
     }
   },
   "auth": {
-    "surveyappdn8989d76e": {
+    "surveyappdn2b09136d": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -51,7 +51,7 @@
     }
   },
   "storage": {
-    "s3surveyappdnstoragec0dc004a": {
+    "s3surveyappdnstorage7ce4cd01": {
       "service": "S3",
       "providerPlugin": "awscloudformation",
       "dependsOn": []

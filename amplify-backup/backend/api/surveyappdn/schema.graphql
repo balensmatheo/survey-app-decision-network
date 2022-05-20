@@ -1,0 +1,45 @@
+input AMPLIFY {
+  globalAuthRule: AuthRule = {allow: public}
+}
+
+type Categorie @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nom: String
+}
+
+type Reponses @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  rating: Int
+  submitted_by: String
+  questionsID: ID! @index(name: "byQuestions")
+  formationID: ID! @index(name: "byFormation")
+}
+
+type Questions @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  titre: String
+  Reponses: [Reponses] @hasMany(indexName: "byQuestions", fields: ["id"])
+  Categorie: Categorie @hasOne
+}
+
+type Formulaire @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nom: String
+  prenom: String
+  societe: String
+  email: String
+  formationID: ID! @index(name: "byFormation")
+  remarques: String
+  signature: String
+}
+
+type Formation @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  nom_formation: String
+  formateur: String
+  date: AWSDate
+  date_fin: AWSDate
+  Formulaires: [Formulaire] @hasMany(indexName: "byFormation", fields: ["id"])
+  participants: [AWSEmail]
+  Reponses: [Reponses] @hasMany(indexName: "byFormation", fields: ["id"])
+} 

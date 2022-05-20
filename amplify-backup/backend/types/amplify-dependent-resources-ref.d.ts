@@ -7,7 +7,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "auth": {
-        "surveyappdn8989d76e": {
+        "surveyappdn2b09136d": {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
@@ -18,7 +18,7 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "storage": {
-        "s3surveyappdnstoragec0dc004a": {
+        "s3surveyappdnstorage7ce4cd01": {
             "BucketName": "string",
             "Region": "string"
         }
