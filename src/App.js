@@ -1,18 +1,14 @@
 import './App.css';
 import "@aws-amplify/ui-react/styles.css"
+import '@fontsource/inter/variable.css';
 
 import {Routes, Route, Link, useNavigate} from "react-router-dom"
 import {Amplify, Auth} from "aws-amplify"
 import awsExports from "./aws-exports";
 import {
-    Authenticator,
     Button,
     Heading,
     Icon,
-    Text,
-    useAuthenticator,
-    useTheme,
-    View
 } from "@aws-amplify/ui-react";
 
 import Formations from "./components/Formations/Formations"
@@ -67,6 +63,7 @@ function App() {
     function getUser(user){
         setUser(user);
     }
+
     return (
         <main>
             <nav className={"navbar"}>
