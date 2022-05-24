@@ -1,7 +1,9 @@
 @import "../node_modules/@syncfusion/ej2-base/styles/material.css";
 @import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
-@import url('https://fonts.googleapis.com/css2?family=Inter:slnt,wght@-10..0,100..900&display=swap');
 
+* {
+  font-family: Roboto, "Open Sans", sans-serif;
+}
 
 .auth {
   height: 100vh;
@@ -23,6 +25,7 @@
 .nav-heading {
   color: whitesmoke;
   text-decoration: none;
+  font-family: Roboto, serif;
   transition: 0.5s;
 }
 
