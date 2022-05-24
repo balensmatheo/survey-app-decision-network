@@ -165,7 +165,7 @@ function Formulaires(props) {
         <>
             <div className={"formulaire-container"}>
                 <div className={"form-title"}>
-                    <Heading flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
+                    <Heading fontFamily={"Roboto"} flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
                     <Button textAlign={"center"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
                         désinscrire ?</Button>
                 </div>
@@ -173,7 +173,9 @@ function Formulaires(props) {
                 <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"} justifyContent={"flex-start"}
                       spacing={"equal"}>
                     <TabItem title={
+                        <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
                         <Text fontFamily={"Roboto"}>Satisfaction</Text>
+                        </Flex>
                     }>
                         <div className={'formulaire'}>
                             <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
@@ -320,7 +322,9 @@ function Formulaires(props) {
                             </TabItem>
                             :
                             <TabItem disabled={true} title={
-                                <Text fontFamily={"Roboto"}>Signature</Text>
+                                <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
+                                    <Text fontFamily={"Roboto"}>Signature</Text>
+                                </Flex>
                             }>
                                 <Signature getSignature={getSignature} user={Auth.user}/>
 
