@@ -236,7 +236,10 @@ function Formulaires(props) {
                                     {
                                         categories.map((categorie, index) => (
                                                 <TabItem width={"100%"} key={index} title={
-                                                    <Text color={"black"}>{categorie.nom}</Text>
+                                                    <Flex direction={"row"} alignItems={"center"} justifyContent={"center"}>
+                                                        <Text fontFamily={"Roboto"} color={"black"}>{categorie.nom}</Text>
+                                                    </Flex>
+
                                                 }>
                                                     <Collection width={"100%"} marginTop={"2em"} items={questions}>
                                                         {(item, index) => (
