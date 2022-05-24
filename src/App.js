@@ -76,11 +76,11 @@ function App() {
                 </Link>
                 {
                     loggedIn ?
-                        <Button size={"small"} border={"none"} backgroundColor={"#ffaeae"} marginRight={"1em"}
+                        <Button size={"small"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} marginRight={"1em"}
                                 onClick={signOut}>Déconnexion</Button>
                         :
-                        <Link to={"signIn"}>
-                            <Button size={"small"} border={"none"} backgroundColor={"#aee3ff"} marginRight={"1em"}>Connexion</Button>
+                        <Link className={"signInLink"} to={"signIn"}>
+                            <Button fontFamily={"Roboto"} size={"small"} border={"none"} backgroundColor={"#aee3ff"} marginRight={"1em"}>Connexion</Button>
                         </Link>
                 }
 

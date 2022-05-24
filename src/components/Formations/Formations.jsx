@@ -97,12 +97,12 @@ function Formations(props) {
                                         width={"100%"}
                                     >
                                         <Flex direction={"row"} justifyContent={"flex-start"}></Flex>
-                                        <Heading level={4}>
+                                        <Heading fontFamily={"Roboto"} level={4}>
                                             {item.nom_formation}
                                         </Heading>
                                         <Flex flex={"1 1 auto"} direction={"row"} alignItems={"flex-end"}
                                               justifyContent={"flex-end"}>
-                                            <Badge borderRadius={"2px"} size={"small"}>Formateur
+                                            <Badge fontFamily={"Roboto"} borderRadius={"2px"} size={"small"}>Formateur
                                                 : {item.formateur}</Badge>
                                         </Flex>
                                     </Flex>
@@ -114,8 +114,8 @@ function Formations(props) {
                                     >
                                         <Flex marginLeft={"1em"} direction={"row"} width={"100%"}
                                               justifyContent={"flex-start"} alignItems={"center"}>
-                                            <Badge size={"small"} variation={"info"}>{item.date}</Badge>
-                                            <Badge className={"formation-length"} size={"small"}
+                                            <Badge size={"small"} variation={"info"} fontFamily={"Roboto"}>{item.date}</Badge>
+                                            <Badge className={"formation-length"} fontFamily={"Roboto"} size={"small"}
                                                    variation={"success"}>{getDuree(item.date, item.date_fin)} jours</Badge>
                                         </Flex>
                                         {
@@ -124,10 +124,10 @@ function Formations(props) {
                                                       justifyContent={"center"}>
                                                     {
                                                         item.participants.find(participant => participant === Auth.user.attributes.email) ?
-                                                            <Button size={"small"} className={"continue-form"}
+                                                            <Button fontFamily={"Roboto"} size={"small"} className={"continue-form"}
                                                                     onClick={() => navigateToForm(item)}>Continuer</Button>
                                                             :
-                                                            <Button className={"subscribe-btn"}
+                                                            <Button fontFamily={"Roboto"} className={"subscribe-btn"}
                                                                     isDisabled={item.participants.find(participant => participant === Auth.user.attributes.email)}
                                                                     onClick={() => subscribe(item.id, item)}>S'inscrire</Button>
                                                     }

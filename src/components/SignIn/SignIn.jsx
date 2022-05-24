@@ -65,7 +65,7 @@ function SignIn({onSignIn, getUser}) {
     return (
         <div className={"signin-main-container"}>
             <Flex marginBottom={"2em"} direction={"column"} width={"40%"} minWidth={"300px"}>
-                <Heading level={2} fontSize={"calc(15px + 2vmin)"} textAlign={"center"} fontWeight={500}>Connectez
+                <Heading fontFamily={"Roboto"} level={2} fontSize={"calc(15px + 2vmin)"} textAlign={"center"} fontWeight={500}>Connectez
                     vous à votre compte</Heading>
                 <Divider orientation={"horizontal"}></Divider>
             </Flex>

@@ -5,10 +5,14 @@
   font-family: Roboto, "Open Sans", sans-serif;
 }
 
+
 .auth {
   height: 100vh;
   width: 100%;
   background-color: whitesmoke;
+}
+.signInLink{
+  text-decoration: none;
 }
 
 .navbar {
@@ -41,7 +45,6 @@
   .link-accueil {
     visibility: hidden;
   }
-
 }
 
 .nav-heading:hover {

@@ -20,6 +20,7 @@
     justify-content: flex-start;
     margin-left: 1em;
     font-size: calc(10px + 3.3vw);
+    font-family: Roboto, "Open Sans", sans-serif;
 }
 
 .formations-container {
@@ -42,6 +43,7 @@
 
 .subscribe-btn {
     display: flex;
+    font-family: Roboto, sans-serif;
     align-items: flex-end;
     justify-content: space-between;
     background-color: #bfffbc;

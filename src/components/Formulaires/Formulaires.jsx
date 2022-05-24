@@ -3,10 +3,10 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
-import {Auth, DataStore, Storage} from "aws-amplify";
+import {Auth, DataStore} from "aws-amplify";
 import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
 import Signature from "../Signature/Signature";
-import {Box, Checkbox, Fab, IconButton, TextField, Tooltip} from "@mui/material";
+import {Box, Checkbox, Fab, TextField, Tooltip} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -166,13 +166,15 @@ function Formulaires(props) {
             <div className={"formulaire-container"}>
                 <div className={"form-title"}>
                     <Heading flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
-                    <Button textAlign={"center"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
+                    <Button textAlign={"center"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
                         désinscrire ?</Button>
                 </div>
                 <Divider></Divider>
                 <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"} justifyContent={"flex-start"}
                       spacing={"equal"}>
-                    <TabItem title={"Satisfaction"}>
+                    <TabItem title={
+                        <Text fontFamily={"Roboto"}>Satisfaction</Text>
+                    }>
                         <div className={'formulaire'}>
                             <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
                                   alignItems={"flex-end"} paddingRight={"2em"}>
@@ -181,7 +183,7 @@ function Formulaires(props) {
                                 </Fab>
                             </Flex>
                             <div className={'personnal-infos'}>
-                                <Heading fontWeight={400} variation={"info"} textAlign={"center"} level={3}
+                                <Heading fontFamily={"Roboto"} fontWeight={400} variation={"info"} textAlign={"center"} level={3}
                                          paddingBottom={"1em"} paddingTop={"1em"}>Informations
                                     personnelles</Heading>
                                 <Box
@@ -269,7 +271,7 @@ function Formulaires(props) {
                                 alignItems: 'flex-end',
                                 marginTop: '2em',
                                 marginBottom: '2em',
-                                width: '50%'
+                                width: '70%'
                             }}>
                                 <TextField
                                     fullWidth
@@ -280,17 +282,17 @@ function Formulaires(props) {
                                 />
                             </Box>
                             <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
-                                <Text fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
+                                <Text fontFamily={"Roboto"} fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
                                     et traitées</Text>
                                 <Checkbox checked={checked} onChange={handleChange}/>
                             </Flex>
                             <Flex marginBottom={"2em"}>
                                 {
                                     !formState.nom || !formState.prenom || !formState.societe || !checked  ?
-                                        <Button disabled={true} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
+                                        <Button fontFamily={"Roboto"} disabled={true} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
                                             le formulaire</Button>
                                         :
-                                        <Button disabled={false} marginBottom={"5em"}
+                                        <Button fontFamily={"Roboto"} disabled={false} marginBottom={"5em"}
                                                 onClick={() => createFormulaire()}>Envoyer
                                             le formulaire</Button>
                                 }
@@ -302,7 +304,7 @@ function Formulaires(props) {
                         signature === "" ?
                             <TabItem title={
                                 <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                                    <Text>Signature</Text>
+                                    <Text fontFamily={"Roboto"}>Signature</Text>
                                     <Tooltip title={"Veuillez signer s.v.p"} arrow>
                                         <NewReleasesIcon className={"testicon"} fontSize={"small"} sx={{color: "#0d8505"}}/>
                                     </Tooltip>
@@ -318,7 +320,7 @@ function Formulaires(props) {
                             </TabItem>
                             :
                             <TabItem disabled={true} title={
-                                <Text color={"black"}>Signature</Text>
+                                <Text fontFamily={"Roboto"}>Signature</Text>
                             }>
                                 <Signature getSignature={getSignature} user={Auth.user}/>
 

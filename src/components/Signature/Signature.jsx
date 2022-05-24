@@ -26,7 +26,7 @@ function Signature(props) {
 
     return (
             <Flex marginTop={"3em"} direction={"column"} width={"100%"} alignItems={"center"}>
-                <Heading fontSize={"calc(10px + 1.5vmin)"} fontWeight={400} level={3}>Merci de signer ci-dessous</Heading>
+                <Heading fontFamily={"Roboto"} fontSize={"calc(10px + 1.5vmin)"} fontWeight={400} level={3}>Merci de signer ci-dessous</Heading>
                 <Flex direction={"row"} width={"100%"} justifyContent={"center"}>
                     <SignatureComponent velocity={2} ref={sign => signObj = sign}></SignatureComponent>
                 </Flex>
