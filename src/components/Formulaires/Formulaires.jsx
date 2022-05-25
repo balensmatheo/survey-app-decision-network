@@ -277,7 +277,8 @@ function Formulaires(props) {
                                 alignItems: 'flex-end',
                                 marginTop: '2em',
                                 marginBottom: '2em',
-                                width: '70%'
+                                width: '70%',
+                                minWidth: '300px',
                             }}>
                                 <TextField
                                     fullWidth
@@ -331,7 +332,6 @@ function Formulaires(props) {
                                 </Flex>
                             }>
                                 <Signature getSignature={getSignature} user={Auth.user}/>
-
                                 <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
                                       justifyContent={"flex-start"} alignItems={"center"}>
                                     <Fab color={"primary"} onClick={() => setIndex(0)}>
