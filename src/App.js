@@ -72,7 +72,7 @@ function App() {
                     <Link className={"nav-heading"} to={'*'}>
                         <Flex direction={"row"} alignItems={"center"} justifyContent={"flex-start"}>
                             <Image className={"logo"} height={"70px"} width={"70px"} alt={"Decision Network Logo"} src={logo}/>
-                            <Heading fontWeight={500} level={1} marginRight={"0.5em"} color={"white"}>Espace Formations</Heading>
+                            <Heading fontFamily={"Roboto"} fontWeight={500} level={1} marginRight={"0.5em"} color={"white"}>Espace Formations</Heading>
                         </Flex>
                     </Link>
                 </Heading>
