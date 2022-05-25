@@ -6,15 +6,16 @@ import {Routes, Route, Link, useNavigate} from "react-router-dom"
 import {Amplify, Auth} from "aws-amplify"
 import awsExports from "./aws-exports";
 import {
-    Button,
+    Button, Flex,
     Heading,
-    Icon,
+    Icon, Image, Text,
 } from "@aws-amplify/ui-react";
 
 import Formations from "./components/Formations/Formations"
 import Formulaires from "./components/Formulaires/Formulaires";
 import Success from "./components/Success/Success";
 import SignIn from "./components/SignIn/SignIn";
+import logo from "./assets/Decision_Network.png"
 
 
 import {useEffect, useState} from "react";
@@ -67,8 +68,14 @@ function App() {
     return (
         <main>
             <nav className={"navbar"}>
-                <Heading flex={"1 1 auto"} fontWeight={500} color={"whitesmoke"} level={1}><Link
-                    className={"nav-heading"} to={'*'}>Espace Formations</Link></Heading>
+                <Heading flex={"1 1 auto"} fontWeight={500} color={"whitesmoke"} level={1}>
+                    <Link className={"nav-heading"} to={'*'}>
+                        <Flex direction={"row"} alignItems={"center"} justifyContent={"flex-start"}>
+                            <Image className={"logo"} height={"70px"} width={"70px"} alt={"Decision Network Logo"} src={logo}/>
+                            <Text marginRight={"0.5em"} color={"white"}>Espace Formations</Text>
+                        </Flex>
+                    </Link>
+                </Heading>
                 <Link className={"link-accueil"} to={"*"}>
                     <Icon marginRight={"1em"} marginTop={"0.1em"} fontSize={"26pt"} viewBox={{width: 48, height: 48}}
                           color={"white"} ariaLabel={"accueil"}

@@ -74,10 +74,10 @@ function Formations(props) {
             <div className={"formations"}>
                 {
                     Auth.user != null || undefined?
-                        <Heading className={"welcome"} marginTop={"2em"} level={4}>Bonjour {Auth.user.attributes.email},
+                        <Heading className={"welcome"} marginTop={"1.5em"} level={3}>Bonjour {Auth.user.attributes.email},
                             voici les formations disponibles</Heading>
                         :
-                        <Heading className={"welcome"} marginTop={"2em"} level={4}>Bienvenue, veuillez vous connecter
+                        <Heading className={"welcome"} fontSize={"calc(15px + 2.2vmin)"} marginTop={"1.5em"} level={3}>Bienvenue, veuillez vous connecter
                             afin de choisir votre formation</Heading>
                 }
 

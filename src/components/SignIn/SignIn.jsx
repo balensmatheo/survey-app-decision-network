@@ -78,13 +78,17 @@ function SignIn({onSignIn, getUser}) {
                     required={true}
                     onChange={event => setMail(event.target.value)}
                 />
-
                 {
                     error ?
                         <TextField
                             id={'password'}
                             error={true}
-                            helperText={"Vous avez saisi le mauvais mot de passe !"}
+                            helperText={
+                            password.length>=8 ?
+                            "Vous avez saisi le mauvais mot de passe !"
+                                :
+                                "Le mot de passe doit comporter plus de 8 caractères"
+                        }
                             label={"Mot de Passe"}
                             value={password}
                             onChange={event => setPassword(event.target.value)}
@@ -108,10 +112,17 @@ function SignIn({onSignIn, getUser}) {
                             id={'new_password'}
                             label={'Nouveau Mot de Passe'}
                             value={newPassword}
+                            error={newPassword.length<8}
+                            helperText={
+                            newPassword.length<8 ?
+                            "Le nouveau mot de passe doit etre composé de 8 caractères au moins !"
+                                :
+                                ""
+                        }
                             onChange={event => setNewPassword(event.target.value)}
                             type={"password"}
                         />
-                        <Button onClick={changePassword}>Mettre à jour mes informations</Button>
+                        <Button disabled={newPassword.length<8} onClick={changePassword}>Mettre à jour mes informations</Button>
                     </>
                     :
                     loading ?

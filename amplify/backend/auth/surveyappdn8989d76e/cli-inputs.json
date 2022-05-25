@@ -2,7 +2,7 @@
   "version": "1",
   "cognitoConfig": {
     "identityPoolName": "surveyappdn8989d76e_identitypool_8989d76e",
-    "allowUnauthenticatedIdentities": true,
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "survey8989d76e",
     "userPoolName": "surveyappdn8989d76e_userpool_8989d76e",
     "autoVerifiedAttributes": [
@@ -14,8 +14,8 @@
     ],
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
-    "emailVerificationMessage": "Your verification code is {####}",
+    "emailVerificationSubject": "Formation - vÃ©rification",
+    "emailVerificationMessage": "Votre code temporaire est {####}",
     "defaultPasswordPolicy": false,
     "passwordPolicyMinLength": 8,
     "passwordPolicyCharacters": [],

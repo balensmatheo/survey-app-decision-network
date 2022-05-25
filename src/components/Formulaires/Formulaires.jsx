@@ -151,6 +151,7 @@ function Formulaires(props) {
 
     function getSignature(value) {
         setSignature(value)
+        console.log(value)
     }
 
     if (loading === true) {
@@ -166,7 +167,7 @@ function Formulaires(props) {
             <div className={"formulaire-container"}>
                 <div className={"form-title"}>
                     <Heading fontFamily={"Roboto"} flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
-                    <Button textAlign={"center"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
+                    <Button size={"small"} textAlign={"center"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
                         désinscrire ?</Button>
                 </div>
                 <Divider></Divider>
@@ -287,13 +288,13 @@ function Formulaires(props) {
                                 />
                             </Box>
                             <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
-                                <Text fontFamily={"Roboto"} fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
+                                <Text fontSize={"calc(8pt + 0.7vmin)"} fontFamily={"Roboto"} fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
                                     et traitées</Text>
                                 <Checkbox checked={checked} onChange={handleChange}/>
                             </Flex>
                             <Flex marginBottom={"2em"}>
                                 {
-                                    !formState.nom || !formState.prenom || !formState.societe || !checked  ?
+                                    !formState.nom || !formState.prenom || !formState.societe || !checked ?
                                         <Button fontFamily={"Roboto"} disabled={true} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
                                             le formulaire</Button>
                                         :
