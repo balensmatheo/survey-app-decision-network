@@ -9,11 +9,9 @@ function Signature(props) {
     let signObj = null;
     const [disable, setDisable] = useState(false);
 
+
     function onSave() {
-        const result = Storage.put("signature_" + props.user.attributes.email + ".png", signObj.saveAsBlob(), {
-            level: "private",
-            contentType: "image",
-        });
+
         setDisable(true);
         props.getSignature(signObj);
     }
@@ -35,6 +33,7 @@ function Signature(props) {
                     <Button disabled={disable} onClick={onSave}>Envoyer</Button>
                     <Button onClick={onClear}>Effacer</Button>
                 </Flex>
+
             </Flex>
     )
 }
