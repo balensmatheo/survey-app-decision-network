@@ -23,7 +23,7 @@
   background-color: #222222;
   box-shadow: 0 0 5px 5px #cccccc;
   height: 15%;
-  padding: 1em 1em;
+  padding: 1em;
   align-items: center;
 }
 
@@ -38,6 +38,11 @@
   visibility: hidden;
 }
 
+.logo {
+  width: 100px;
+  height: auto;
+}
+
 
 @media screen and (max-width: 700px) {
   .nav-heading {
@@ -47,8 +52,9 @@
     visibility: hidden;
   }
   .logo {
-    width: 60px;
-    height: 60px;
+    visibility: hidden;
+    width: 0;
+    height: 0;
   }
 }
 
