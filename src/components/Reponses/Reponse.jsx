@@ -4,8 +4,8 @@ import {Star} from "@mui/icons-material";
 
 export default function Reponse(props){
 
-    const [rating, setRating] = useState(0)
-    const [hover, setHover] = React.useState(-1);
+    const [rating, setRating] = useState();
+    const [hover, setHover] = useState(-1);
 
     const colors = {
         1: 'red',

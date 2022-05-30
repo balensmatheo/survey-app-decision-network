@@ -46,12 +46,11 @@ function Formations(props) {
                 )
                 navigate('formulaire', {state: {id: id_formation, item: item}});
             }
-
-
         } catch (e) {
             console.log("Erreur lors de l'inscritpion", e)
         }
     }
+
 
     function navigateToForm(item) {
         navigate('formulaire', {state: {id: item.id, item: item}});

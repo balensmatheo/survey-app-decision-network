@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react'
-import {useLocation, useNavigate} from "react-router-dom";
+import {NavLink, useLocation, useNavigate} from "react-router-dom";
 import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
 import {Auth, DataStore} from "aws-amplify";
 import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
 import Signature from "../Signature/Signature";
-import {Box, Checkbox, Fab, TextField, Tooltip} from "@mui/material";
+import {Box, Checkbox, TextField, Tooltip} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ReactLoading from "react-loading";
 import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
@@ -20,12 +18,29 @@ function Formulaires(props) {
     const {state} = useLocation()
 
     useEffect(() => {
+        fetchFormulaires();
         fetchQuestions();
         fetchCategories();
     }, [])
 
+    const [submitted, setSubmitted] = useState(false);
     const [loading, setLoading] = useState(false)
     const [categories, setCategories] = useState([])
+    async function fetchFormulaires() {
+        try {
+            // On récupère les formulaires soumis pas l'utilisateurs.
+            const formulaires = await DataStore.query(Formulaire, f =>
+                f.email("eq", Auth.user.attributes.email).formationID("eq", state.id)
+            )
+            if(formulaires.length>0){
+                setSubmitted(true);
+            } else {
+                setSubmitted(false);
+            }
+        } catch (e) {
+            console.log("Erreur lors de la récupération du formulaire !" + e)
+        }
+    }
 
     async function fetchCategories() {
         try {
@@ -160,85 +175,102 @@ function Formulaires(props) {
                 <ReactLoading type={"bubbles"} color={"black"}></ReactLoading>
             </Flex>
         )
-    }
+    } else if (submitted === true) {
+        return (
+            <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} width={"100%"} height={"50vh"}>
+                <Flex direction={"row"} justifyContent={"center"} alignItems={"center"}>
+                    <Heading textAlign={"center"} fontWeight={500} fontSize={"calc(13pt + 2vmin)"} fontFamily={"Roboto"}>Vous avez déjà soumis le formulaire pour cette
+                        formation.</Heading>
+                </Flex>
+                <Flex>
+                    <NavLink to={"/"}><Button variation={"link"}>Retourner à l'accueil</Button></NavLink>
+                </Flex>
+            </Flex>
 
-    return (
-        <>
-            <div className={"formulaire-container"}>
-                <div className={"form-title"}>
-                    <Heading fontFamily={"Roboto"} flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
-                    <Button size={"small"} textAlign={"center"} fontFamily={"Roboto"} border={"none"} backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
-                        désinscrire ?</Button>
-                </div>
-                <Divider></Divider>
-                <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"} justifyContent={"flex-start"}
-                      spacing={"equal"}>
-                    <TabItem title={
-                        <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                        <Text fontFamily={"Roboto"}>Satisfaction</Text>
-                        </Flex>
-                    }>
-                        <div className={'formulaire'}>
-                            <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
-                                  alignItems={"flex-end"} paddingRight={"2em"}>
-                                <Fab color={"primary"} onClick={() => setIndex(1)}>
-                                    <ArrowForwardIosIcon/>
-                                </Fab>
+
+        )
+    } else {
+
+        return (
+            <>
+                <div className={"formulaire-container"}>
+                    <div className={"form-title"}>
+                        <Heading fontFamily={"Roboto"} flex={"1 1 auto"} level={3}>{item.nom_formation}</Heading>
+                        <Button size={"small"} textAlign={"center"} fontFamily={"Roboto"} border={"none"}
+                                backgroundColor={"#ffaeae"} onClick={unSubscribe}>Se
+                            désinscrire ?</Button>
+                    </div>
+                    <Divider></Divider>
+                    <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"}
+                          justifyContent={"flex-start"}
+                          spacing={"equal"}>
+                        <TabItem title={
+                            <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
+                                <Text fontFamily={"Roboto"}>Satisfaction</Text>
                             </Flex>
-                            <div className={'personnal-infos'}>
-                                <Heading fontFamily={"Roboto"} fontWeight={400} variation={"info"} textAlign={"center"} level={3}
-                                         paddingBottom={"1em"} paddingTop={"1em"}>Informations
-                                    personnelles</Heading>
-                                <Box
-                                    sx={{
-                                        padding: "2em",
-                                        boxShadow: "-5px 5px 10px 2px whitesmoke",
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        marginTop: '1em',
-                                        width: '100%',
-                                        marginBottom: '2em',
-                                    }}
-                                >
-                                    <Flex direction={"row"} width={"100%"} justifyContent={"flex-end"} height={"100%"}>
-                                        <Tooltip title={"Merci de compléter vos informations"} arrow>
-                                            <InfoIcon color={"info"}/>
-                                        </Tooltip>
-                                    </Flex>
-                                    <Flex
-                                        direction={"column"}
+                        }>
+                            <div className={'formulaire'}>
+                                <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
+                                      alignItems={"flex-end"} paddingRight={"2em"}>
+                                </Flex>
+                                <div className={'personnal-infos'}>
+                                    <Heading fontFamily={"Roboto"} fontWeight={400} variation={"info"}
+                                             textAlign={"center"} level={3}
+                                             paddingBottom={"1em"} paddingTop={"1em"}>Informations
+                                        personnelles</Heading>
+                                    <Box
+                                        sx={{
+                                            padding: "2em",
+                                            boxShadow: "-5px 5px 10px 2px whitesmoke",
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            marginTop: '1em',
+                                            width: '100%',
+                                            marginBottom: '2em',
+                                        }}
                                     >
-                                        <TextField
-                                            variant={"standard"}
-                                            onChange={event => setInput('nom', event.target.value)}
-                                            value={formState.nom}
-                                            label="Nom*"
-                                        />
-                                        <TextField
-                                            variant={"standard"}
-                                            onChange={event => setInput('prenom', event.target.value)}
-                                            value={formState.prenom}
-                                            label="Prénom*"
-                                        />
-                                        <TextField
-                                            variant={"standard"}
-                                            onChange={event => setInput('societe', event.target.value)}
-                                            value={formState.societe}
-                                            label="Société*"
-                                        />
-                                    </Flex>
+                                        <Flex direction={"row"} width={"100%"} justifyContent={"flex-end"}
+                                              height={"100%"}>
+                                            <Tooltip title={"Merci de compléter vos informations"} arrow>
+                                                <InfoIcon color={"info"}/>
+                                            </Tooltip>
+                                        </Flex>
+                                        <Flex
+                                            direction={"column"}
+                                        >
+                                            <TextField
+                                                variant={"standard"}
+                                                onChange={event => setInput('nom', event.target.value)}
+                                                value={formState.nom}
+                                                label="Nom*"
+                                            />
+                                            <TextField
+                                                variant={"standard"}
+                                                onChange={event => setInput('prenom', event.target.value)}
+                                                value={formState.prenom}
+                                                label="Prénom*"
+                                            />
+                                            <TextField
+                                                variant={"standard"}
+                                                onChange={event => setInput('societe', event.target.value)}
+                                                value={formState.societe}
+                                                label="Société*"
+                                            />
+                                        </Flex>
 
-                                </Box>
-                            </div>
+                                    </Box>
+                                </div>
 
-                            <Flex width={"100%"} justifyContent={"center"}>
-                                <Tabs currentIndex={categorie} onChange={(i) => setCategorie(i)} width={"100%"}
-                                      spacing={"equal"} justifyContent={"center"}>
-                                    {
-                                        categories.map((categorie, index) => (
+                                <Flex width={"100%"} justifyContent={"center"}>
+                                    <Tabs currentIndex={categorie} onChange={(i) => setCategorie(i)} width={"100%"}
+                                          spacing={"equal"} justifyContent={"center"}>
+                                        {
+                                            categories.map((categorie, index) => (
                                                 <TabItem width={"100%"} key={index} title={
-                                                    <Flex direction={"row"} alignItems={"center"} justifyContent={"center"}>
-                                                        <Text fontFamily={"Roboto"} color={"black"}>{categorie.nom}</Text>
+                                                    <Flex direction={"row"} alignItems={"center"}
+                                                          justifyContent={"center"}>
+                                                        <Text fontFamily={"Roboto"}
+                                                              color={"black"}>{categorie.nom}</Text>
                                                     </Flex>
 
                                                 }>
@@ -267,85 +299,85 @@ function Formulaires(props) {
                                                         )}
                                                     </Collection>
                                                 </TabItem>
-                                        ))
+                                            ))
+                                        }
+                                    </Tabs>
+                                </Flex>
+
+                                <Box className={"remarques"} sx={{
+                                    display: 'flex',
+                                    alignItems: 'flex-end',
+                                    marginTop: '2em',
+                                    marginBottom: '2em',
+                                    width: '70%',
+                                    minWidth: '300px',
+                                }}>
+                                    <TextField
+                                        fullWidth
+                                        variant={"outlined"}
+                                        label={"Autres remarques :"}
+                                        value={formState.commentaires}
+                                        onChange={event => setInput('commentaires', event.target.value)}
+                                    />
+                                </Box>
+                                <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
+                                    <Text fontSize={"calc(8pt + 0.7vmin)"} fontFamily={"Roboto"} fontWeight={"bolder"}>J'accepte
+                                        que les données entrées ci-dessus soient stockées
+                                        et traitées</Text>
+                                    <Checkbox checked={checked} onChange={handleChange}/>
+                                </Flex>
+                                <Flex marginBottom={"2em"}>
+                                    {
+                                        !formState.nom || !formState.prenom || !formState.societe || !checked ?
+                                            <Button fontFamily={"Roboto"} disabled={true} marginBottom={"5em"}
+                                                    onClick={() => createFormulaire()}>Envoyer
+                                                le formulaire</Button>
+                                            :
+                                            <Button fontFamily={"Roboto"} disabled={false} marginBottom={"5em"}
+                                                    onClick={() => createFormulaire()}>Envoyer
+                                                le formulaire</Button>
                                     }
-                                </Tabs>
-                            </Flex>
-
-                            <Box className={"remarques"} sx={{
-                                display: 'flex',
-                                alignItems: 'flex-end',
-                                marginTop: '2em',
-                                marginBottom: '2em',
-                                width: '70%',
-                                minWidth: '300px',
-                            }}>
-                                <TextField
-                                    fullWidth
-                                    variant={"outlined"}
-                                    label={"Autres remarques :"}
-                                    value={formState.commentaires}
-                                    onChange={event => setInput('commentaires', event.target.value)}
-                                />
-                            </Box>
-                            <Flex direction={"row"} alignItems={"center"} width={"50%"} marginBottom={"2em"}>
-                                <Text fontSize={"calc(8pt + 0.7vmin)"} fontFamily={"Roboto"} fontWeight={"bolder"}>J'accepte que les données entrées ci-dessus soient stockées
-                                    et traitées</Text>
-                                <Checkbox checked={checked} onChange={handleChange}/>
-                            </Flex>
-                            <Flex marginBottom={"2em"}>
-                                {
-                                    !formState.nom || !formState.prenom || !formState.societe || !checked ?
-                                        <Button fontFamily={"Roboto"} disabled={true} marginBottom={"5em"} onClick={() => createFormulaire()}>Envoyer
-                                            le formulaire</Button>
-                                        :
-                                        <Button fontFamily={"Roboto"} disabled={false} marginBottom={"5em"}
-                                                onClick={() => createFormulaire()}>Envoyer
-                                            le formulaire</Button>
-                                }
-                            </Flex>
-
-                        </div>
-                    </TabItem>
-                    {
-                        signature === "" ?
-                            <TabItem title={
-                                <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                                    <Text fontFamily={"Roboto"}>Signature</Text>
-                                    <Tooltip title={"Veuillez signer s.v.p"} arrow>
-                                        <NewReleasesIcon className={"testicon"} fontSize={"small"} sx={{color: "#0d8505"}}/>
-                                    </Tooltip>
                                 </Flex>
-                            }>
-                                <Signature getSignature={getSignature} user={Auth.user}/>
-                                <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
-                                      justifyContent={"flex-start"} alignItems={"center"}>
-                                    <Fab color={"primary"} onClick={() => setIndex(0)}>
-                                        <ArrowBackIosNewIcon/>
-                                    </Fab>
-                                </Flex>
-                            </TabItem>
-                            :
-                            <TabItem disabled={true} title={
-                                <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                                    <Text fontFamily={"Roboto"}>Signature</Text>
-                                </Flex>
-                            }>
-                                <Signature getSignature={getSignature} user={Auth.user}/>
-                                <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
-                                      justifyContent={"flex-start"} alignItems={"center"}>
-                                    <Fab color={"primary"} onClick={() => setIndex(0)}>
-                                        <ArrowBackIosNewIcon/>
-                                    </Fab>
-                                </Flex>
-                            </TabItem>
 
-                    }
+                            </div>
+                        </TabItem>
+                        {
+                            signature === "" ?
+                                <TabItem title={
+                                    <Flex direction={"row"} width={"100%"} alignItems={"center"}
+                                          justifyContent={"center"}>
+                                        <Text fontFamily={"Roboto"}>Signature</Text>
+                                        <Tooltip title={"Veuillez signer s.v.p"} arrow>
+                                            <NewReleasesIcon className={"testicon"} fontSize={"small"}
+                                                             sx={{color: "#0d8505"}}/>
+                                        </Tooltip>
+                                    </Flex>
+                                }>
+                                    <Signature getSignature={getSignature} user={Auth.user}/>
+                                    <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
+                                          justifyContent={"flex-start"} alignItems={"center"}>
+                                    </Flex>
+                                </TabItem>
+                                :
+                                <TabItem disabled={true} title={
+                                    <Flex direction={"row"} width={"100%"} alignItems={"center"}
+                                          justifyContent={"center"}>
+                                        <Text fontFamily={"Roboto"}>Signature</Text>
+                                    </Flex>
+                                }>
+                                    <Signature getSignature={getSignature} user={Auth.user}/>
+                                    <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
+                                          justifyContent={"flex-start"} alignItems={"center"}>
+                                    </Flex>
+                                </TabItem>
 
-                </Tabs>
-            </div>
-        </>
-    )
+                        }
+
+                    </Tabs>
+                </div>
+            </>
+        )
+    }
 }
 
 export default Formulaires;
