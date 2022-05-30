@@ -105,7 +105,7 @@ function App() {
                 <Container maxWidth="xl">
                     <Toolbar disableGutters>
                         <Flex className={'img-logo'} marginRight={"2em"}>
-                            <img width={"100px"} src={logo} alt={"Logo Decision Network"}/>
+                            <img onClick={() => navigate('/')} width={"100px"} src={logo} alt={"Logo Decision Network"}/>
                         </Flex>
                         <Typography
                             variant="h4"
