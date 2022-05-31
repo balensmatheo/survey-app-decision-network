@@ -51,7 +51,6 @@ function SignIn({onSignIn, getUser}) {
                     }
                 });
             getUser(user);
-
         } catch (e) {
             console.log("Error while Sign-In" + e);
             setLoading(false);

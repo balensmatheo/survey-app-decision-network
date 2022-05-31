@@ -7,10 +7,8 @@ import {Amplify, Auth} from "aws-amplify"
 import awsExports from "./aws-exports";
 import {
     Flex,
-    Heading,
-    Text,
 } from "@aws-amplify/ui-react";
-
+import MenuIcon from '@mui/icons-material/Menu';
 import Formations from "./components/Formations/Formations"
 import Formulaires from "./components/Formulaires/Formulaires";
 import Success from "./components/Success/Success";
@@ -33,7 +31,7 @@ import {
     Typography,
     Button
 } from "@mui/material";
-import {Image} from "@mui/icons-material";
+import Signature from "./components/Signature/Signature";
 
 Amplify.configure(awsExports);
 
@@ -165,7 +163,7 @@ function App() {
                             <Box sx={{flexGrow: 0}}>
                                 <Tooltip title="Open settings">
                                     <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                        <Avatar alt="Profil"/>
+                                        <MenuIcon fontSize={"large"} sx={{color: 'white'}}/>
                                     </IconButton>
                                 </Tooltip>
                                 <Menu
@@ -206,9 +204,10 @@ function App() {
                 <Route path={"formulaire/success"} element={<Success/>} component={Success}/>
                 <Route path={"signIn"} element={<SignIn onSignIn={onSignIn} getUser={getUser}/>} component={SignIn}/>
                 <Route path={"myformations"} element={<MyFormations/>} component={MyFormations}/>
+                <Route path={"signature"} element={<Signature/>} component={Signature}/>
             </Routes>
             <footer>
-                <a href={"https://decision-network.eu/"}>Decision Network ©</a>
+                <a rel={"noreferrer"} target={"_blank"} href={"https://decision-network.eu/"}>Decision Network ©</a>
             </footer>
 
         </main>

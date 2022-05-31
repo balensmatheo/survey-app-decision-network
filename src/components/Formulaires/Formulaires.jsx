@@ -147,7 +147,6 @@ function Formulaires(props) {
             }
             setLoading(false);
             navigate("success")
-
         } catch (e) {
             console.log(e)
         }
@@ -156,6 +155,7 @@ function Formulaires(props) {
     const [categorie, setCategorie] = useState(0);
 
     const [checked, setChecked] = useState(false);
+
     const handleChange = (event) => {
         setChecked(event.target.checked);
     };
@@ -183,7 +183,9 @@ function Formulaires(props) {
                         formation.</Heading>
                 </Flex>
                 <Flex>
-                    <NavLink to={"/"}><Button variation={"link"}>Retourner à l'accueil</Button></NavLink>
+                    <NavLink to={{
+                        pathname: '/',
+                    }}><Button variation={"link"}>Retourner à l'accueil</Button></NavLink>
                 </Flex>
             </Flex>
 
@@ -372,7 +374,6 @@ function Formulaires(props) {
                                 </TabItem>
 
                         }
-
                     </Tabs>
                 </div>
             </>

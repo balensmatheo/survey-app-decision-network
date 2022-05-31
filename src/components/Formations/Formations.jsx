@@ -4,7 +4,7 @@ import { Auth, DataStore} from "aws-amplify";
 import {Formation} from "../../models";
 import {Badge, Card, Collection, Divider, Flex, Heading} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import {useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
 import {Button} from "@mui/material";
 
@@ -13,6 +13,7 @@ function Formations(props) {
     useEffect(() => {
         fetchFormations();
     }, [])
+
 
     const navigate = useNavigate();
     const [formations, setFormations] = useState([]);
@@ -74,10 +75,10 @@ function Formations(props) {
             <div className={"formations"}>
                 {
                     Auth.user != null || undefined?
-                        <Heading className={"welcome"}  fontSize={"calc(14px + 2.2vmin)"} marginTop={"1.5em"} level={3}>Bonjour {Auth.user.attributes.email},
+                        <Heading className={"welcome"}  fontSize={"calc(12px + 2.2vmin)"} marginTop={"1.5em"} level={3}>Bonjour {Auth.user.attributes.email},
                             voici les formations disponibles</Heading>
                         :
-                        <Heading className={"welcome"} fontSize={"calc(14px + 2.2vmin)"} marginTop={"1.5em"} level={3}>Bienvenue, veuillez vous connecter
+                        <Heading className={"welcome"} fontSize={"calc(12px + 2.2vmin)"} marginTop={"1.5em"} level={3}>Bienvenue, veuillez vous connecter
                             afin de choisir votre formation</Heading>
                 }
 
@@ -127,7 +128,7 @@ function Formations(props) {
                                                             <Button fontFamily={"Roboto"} size={"small"} variant={"contained"} color={"info"}
                                                                     onClick={() => navigateToForm(item)}>Continuer</Button>
                                                             :
-                                                            <Button fontFamily={"Roboto"} className={"subscribe-btn"}
+                                                            <Button fontFamily={"Roboto"}
                                                                     color={"success"}
                                                                     variant={"contained"}
                                                                     size={"small"}
