@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import {Flex, Heading} from "@aws-amplify/ui-react";
-import {Alert, Snackbar} from "@mui/material";
+import {Alert, Button, Snackbar} from "@mui/material";
+import {NavLink} from "react-router-dom";
 
 function Success() {
     const [open, setOpen] = useState(true);
@@ -15,8 +16,9 @@ function Success() {
         setOpen(false);
     };
     return(
-        <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} height={"90vh"}>
+        <Flex direction={"column"} justifyContent={"center"} alignItems={"center"} height={"70vh"}>
             <Heading fontFamily={"Roboto"} fontWeight={400} level={2}>Vos données ont été soumises avec succes</Heading>
+            <NavLink to={"/"}><Button>Retourner à l'accueil</Button></NavLink>
                 <Snackbar
                     open={open}
                     autoHideDuration={6000}

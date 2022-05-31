@@ -92,13 +92,12 @@ function MyFormations() {
     }
 
     return (
-        <Flex direction={"column"} width={"100%"} marginTop={"2em"} padding={"1em"} height={"100vh"}>
+        <Flex direction={"column"} width={"100%"} marginTop={"1em"} padding={"1em"} height={"100vh"}>
             <Flex direction={"row"}>
                 <Typography variant={"h5"} fontSize={"calc(10px+1.1vmin)"} fontWeight={400} fontFamily={"Roboto"}>Voici vos informations personnelles :</Typography>
             </Flex>
-
             <Flex direction={"column"} marginLeft={"1em"}>
-                <Flex direction={"row"} alignItems={"center"}>
+                <Flex direction={"row"}>
                     <p>Adresse e-mail : {email}</p>
                     {
                         !request ?
@@ -153,7 +152,7 @@ function MyFormations() {
                     null
                 }
 
-                <Flex direction={'row'} alignItems={"center"}>
+                <Flex direction={'row'}>
                     <p>Mot de passe : ******</p>
                     {
                         !requestP ?
