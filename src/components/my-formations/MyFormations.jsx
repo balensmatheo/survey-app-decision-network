@@ -79,7 +79,6 @@ function MyFormations() {
                 })
                 .then(data => console.log(data))
                 .catch( err => setMessage("error"))
-            setRequestP(false);
             setMessage("success")
         } catch (e) {
             console.log("Erreur lors du changement de mot de passe", e)
@@ -92,11 +91,12 @@ function MyFormations() {
     }
 
     return (
-        <Flex direction={"column"} width={"100%"} marginTop={"1em"} padding={"1em"} height={"100vh"}>
+        <Flex direction={"column"} width={"100%"} marginTop={"1em"} padding={"2em"} height={"100vh"}>
             <Flex direction={"row"}>
-                <Typography variant={"h5"} fontSize={"calc(10px+1.1vmin)"} fontWeight={400} fontFamily={"Roboto"}>Voici vos informations personnelles :</Typography>
+                <Typography marginTop={1} variant={"h4"} fontSize={"calc(10px+1.1vmin)"} fontWeight={400} fontFamily={"Roboto"}>Voici vos informations personnelles :</Typography>
             </Flex>
-            <Flex direction={"column"} marginLeft={"1em"}>
+            <Divider textAlign={"left"}/>
+            <Flex direction={"column"}>
                 <Flex direction={"row"}>
                     <p>Adresse e-mail : {email}</p>
                     {
@@ -193,10 +193,10 @@ function MyFormations() {
 
                 {
                     message==="error" ?
-                        <Typography color={"red"}>Erreur lors du changement de mot de passe</Typography>
+                        <Typography color={"red"} variant={"body2"}>Erreur lors du changement de mot de passe</Typography>
                         :
                         message ==="success" ?
-                            <Typography color={"green"}>Changement réussi</Typography>
+                            <Typography color={"green"} variant={"body2"} fontFamily={"Roboto"}>Changement effectué</Typography>
                             :
                             null
                 }

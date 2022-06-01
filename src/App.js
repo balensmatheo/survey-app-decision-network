@@ -2,7 +2,7 @@ import './App.css';
 import "@aws-amplify/ui-react/styles.css"
 import '@fontsource/inter/variable.css';
 
-import {Routes, Route, Link, useNavigate, NavLink} from "react-router-dom"
+import {Routes, Route, useNavigate, NavLink} from "react-router-dom"
 import {Amplify, Auth} from "aws-amplify"
 import awsExports from "./aws-exports";
 import {
@@ -14,7 +14,6 @@ import Formulaires from "./components/Formulaires/Formulaires";
 import Success from "./components/Success/Success";
 import SignIn from "./components/SignIn/SignIn";
 import logo from "./assets/logo_dn_png.png"
-
 
 import {useEffect, useState} from "react";
 import MyFormations from "./components/my-formations/MyFormations";
@@ -32,10 +31,11 @@ import {
     Button
 } from "@mui/material";
 import Signature from "./components/Signature/Signature";
+import React from "react";
+import {AccountCircle, Assignment, Home, Logout} from "@mui/icons-material";
+import MySignatures from "./components/My-Signatures/MySignatures";
 
 Amplify.configure(awsExports);
-
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function App() {
 
@@ -96,6 +96,7 @@ function App() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
 
     return (
         <main>
@@ -158,6 +159,11 @@ function App() {
                         </Box>
                         <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         </Box>
+                        <Box sx={{alignItems: "center",textDecoration: 'none', color: 'white', marginRight: '2em'}}>
+                            <NavLink to={'/'}>
+                                <Home sx={{color: 'white'}} fontSize={"large"}/>
+                            </NavLink>
+                        </Box>
 
                         {loggedIn ?
                             <Box sx={{flexGrow: 0}}>
@@ -172,23 +178,31 @@ function App() {
                                     anchorEl={anchorElUser}
                                     anchorOrigin={{
                                         vertical: 'top',
-                                        horizontal: 'right',
+                                        horizontal: 'center',
                                     }}
                                     keepMounted
                                     transformOrigin={{
                                         vertical: 'top',
-                                        horizontal: 'right',
+                                        horizontal: 'center',
                                     }}
                                     open={Boolean(anchorElUser)}
                                     onClose={handleCloseUserMenu}
                                 >
                                     <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography onClick={() => navigate('myformations')} textAlign="center">Mon Compte</Typography>
+                                        <Flex direction={"row"} alignItems={"center"}>
+                                            <AccountCircle/><Typography onClick={() => navigate('myformations')} textAlign="center">Mon Compte</Typography>
+                                        </Flex>
+                                    </MenuItem>
+                                    <MenuItem divider={true} onClick={handleCloseUserMenu}>
+                                        <Flex direction={"row"} alignItems={"center"}>
+                                        <Assignment/><Typography onClick={() => navigate("signature")} textAlign="center">Signatures</Typography>
+                                        </Flex>
                                     </MenuItem>
                                     <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography onClick={() => signOut()} textAlign="center">Déconnexion</Typography>
+                                        <Flex direction={'row'} alignItems={'center'}>
+                                            <Logout/><Typography onClick={() => signOut()} textAlign="center">Déconnexion</Typography>
+                                        </Flex>
                                     </MenuItem>
-
                                 </Menu>
                             </Box>
                             :
@@ -204,12 +218,11 @@ function App() {
                 <Route path={"formulaire/success"} element={<Success/>} component={Success}/>
                 <Route path={"signIn"} element={<SignIn onSignIn={onSignIn} getUser={getUser}/>} component={SignIn}/>
                 <Route path={"myformations"} element={<MyFormations/>} component={MyFormations}/>
-                <Route path={"signature"} element={<Signature/>} component={Signature}/>
+                <Route path={"signature"} element={<MySignatures/>} component={MySignatures}/>
             </Routes>
             <footer>
                 <a rel={"noreferrer"} target={"_blank"} href={"https://decision-network.eu/"}>Decision Network ©</a>
             </footer>
-
         </main>
     );
 }

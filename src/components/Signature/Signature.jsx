@@ -1,17 +1,20 @@
 import React, {useState} from 'react'
 import {Flex, Heading} from "@aws-amplify/ui-react";
 import {SignatureComponent} from "@syncfusion/ej2-react-inputs";
-import {Storage} from "aws-amplify";
-import {Button, Divider} from "@mui/material";
+import {Auth, Storage} from "aws-amplify";
+import {Button} from "@mui/material";
 
 function Signature(props) {
 
     let signObj = null;
     const [disable, setDisable] = useState(false);
 
-
     function onSave() {
-
+        const filename = "signature"+Date.now()+Auth.user.attributes.email+".png"
+        const result =  Storage.put(filename, signObj.saveAsBlob(), {
+            level: "private",
+            contentType: "image/png",
+        });
         setDisable(true);
         props.getSignature(signObj);
     }

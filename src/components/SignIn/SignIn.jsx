@@ -14,7 +14,8 @@ function SignIn({onSignIn, getUser}) {
     const [loading, setLoading] = useState(false);
     const [newPassword, setNewPassword] = useState("");
     const [challenge, setChallenge] = useState(false);
-    const [error, setError] = useState(false);
+
+    const [error, setError] = useState({state: false, value: ""});
 
     const navigate = useNavigate();
 
@@ -47,14 +48,14 @@ function SignIn({onSignIn, getUser}) {
                         onSignIn();
                         navigate('*');
                         setLoading(false)
-                        setError(true);
+                        setError({state: true, value: "Erreur lors de la connexion 1"})
                     }
                 });
             getUser(user);
         } catch (e) {
-            console.log("Error while Sign-In" + e);
+            console.log("Error while Sign-In : " + e);
             setLoading(false);
-            setError(true);
+            setError({state: true, value: "Mot de passe incorrect"});
         }
 
     }
@@ -77,16 +78,11 @@ function SignIn({onSignIn, getUser}) {
                     onChange={event => setMail(event.target.value)}
                 />
                 {
-                    error ?
+                    error.state === true ?
                         <TextField
                             id={'password'}
                             error={true}
-                            helperText={
-                            password.length>=8 ?
-                            "Vous avez saisi le mauvais mot de passe !"
-                                :
-                                "Le mot de passe doit comporter plus de 8 caractères"
-                        }
+                            helperText={error.value}
                             label={"Mot de Passe"}
                             value={password}
                             onChange={event => setPassword(event.target.value)}

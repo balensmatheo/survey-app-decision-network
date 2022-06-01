@@ -4,7 +4,7 @@ import { Auth, DataStore} from "aws-amplify";
 import {Formation} from "../../models";
 import {Badge, Card, Collection, Divider, Flex, Heading} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
 import {Button} from "@mui/material";
 
@@ -126,14 +126,14 @@ function Formations(props) {
                                                     {
                                                         item.participants.find(participant => participant === Auth.user.attributes.email) ?
                                                             <Button fontFamily={"Roboto"} size={"small"} variant={"contained"} color={"info"}
-                                                                    onClick={() => navigateToForm(item)}>Continuer</Button>
+                                                                    onClick={() => navigateToForm(item)}>Accéder</Button>
                                                             :
                                                             <Button fontFamily={"Roboto"}
                                                                     color={"success"}
                                                                     variant={"contained"}
                                                                     size={"small"}
                                                                     disabled={item.participants.find(participant => participant === Auth.user.attributes.email)}
-                                                                    onClick={() => subscribe(item.id, item)}>S'inscrire</Button>
+                                                                    onClick={() => subscribe(item.id, item)}>Choisir</Button>
                                                     }
                                                 </Flex>
                                                 :
@@ -144,7 +144,7 @@ function Formations(props) {
                                                                 size={"small"}
                                                                 variant={"contained"}
                                                                 color={"success"}
-                                                                onClick={() => navigate("signIn")}>S'inscrire</Button>
+                                                                onClick={() => navigate("signIn")}>Choisir</Button>
                                                     }
                                                 </Flex>
                                         }
