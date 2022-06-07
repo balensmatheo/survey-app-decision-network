@@ -219,6 +219,7 @@ function App() {
                 <Route path={"signIn"} element={<SignIn onSignIn={onSignIn} getUser={getUser}/>} component={SignIn}/>
                 <Route path={"myformations"} element={<MyFormations/>} component={MyFormations}/>
                 <Route path={"signature"} element={<MySignatures/>} component={MySignatures}/>
+                <Route path={"submitSignature"} element={<Signature/>} component={Signature}/>
             </Routes>
             <footer>
                 <a rel={"noreferrer"} target={"_blank"} href={"https://decision-network.eu/"}>Decision Network ©</a>

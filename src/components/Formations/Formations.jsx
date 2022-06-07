@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import "./formations.css";
 import { Auth, DataStore} from "aws-amplify";
 import {Formation} from "../../models";
-import {Badge, Card, Collection, Divider, Flex, Heading} from "@aws-amplify/ui-react";
+import {Badge as AmpBadge, Card, Collection, Divider, Flex, Heading} from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import {useNavigate} from 'react-router-dom';
 import ReactLoading from "react-loading";
-import {Button} from "@mui/material";
-
+import {Button, IconButton} from "@mui/material";
+import {Assignment} from "@mui/icons-material";
+import {Storage} from "aws-amplify";
 
 function Formations(props) {
     useEffect(() => {
@@ -58,11 +59,17 @@ function Formations(props) {
         navigate('formulaire', {state: {id: item.id, item: item}});
     }
 
+    function navigateToSignature(item, date, date_fin){
+        navigate('submitSignature', {state: {item: item, date: date, date_fin: date_fin}})
+    }
+
+
     function getDuree(date_debut, date_fin) {
         const fin = Number(date_fin.split("-", 7).slice(2, 3));
         const debut = Number(date_debut.split("-", 7).slice(2, 3));
         return fin - debut;
     }
+
 
     if (loading === true) {
         return (
@@ -103,8 +110,8 @@ function Formations(props) {
                                         </Heading>
                                         <Flex flex={"1 1 auto"} direction={"row"} alignItems={"flex-end"}
                                               justifyContent={"flex-end"}>
-                                            <Badge fontFamily={"Roboto"} borderRadius={"2px"} size={"small"}>Formateur
-                                                : {item.formateur}</Badge>
+                                            <AmpBadge fontFamily={"Roboto"} borderRadius={"2px"} size={"small"}>Formateur
+                                                : {item.formateur}</AmpBadge>
                                         </Flex>
                                     </Flex>
 
@@ -115,9 +122,9 @@ function Formations(props) {
                                     >
                                         <Flex marginLeft={"1em"} direction={"row"} width={"100%"}
                                               justifyContent={"flex-start"} alignItems={"center"}>
-                                            <Badge size={"small"} variation={"info"} fontFamily={"Roboto"}>{item.date}</Badge>
-                                            <Badge className={"formation-length"} fontFamily={"Roboto"} size={"small"}
-                                                   variation={"success"}>{getDuree(item.date, item.date_fin)} jours</Badge>
+                                            <AmpBadge size={"small"} variation={"info"} fontFamily={"Roboto"}>{item.date}</AmpBadge>
+                                            <AmpBadge className={"formation-length"} fontFamily={"Roboto"} size={"small"}
+                                                   variation={"success"}>{getDuree(item.date, item.date_fin)} jours</AmpBadge>
                                         </Flex>
                                         {
                                              Auth.user !== null || undefined ?
@@ -125,8 +132,13 @@ function Formations(props) {
                                                       justifyContent={"center"}>
                                                     {
                                                         item.participants.find(participant => participant === Auth.user.attributes.email) ?
-                                                            <Button fontFamily={"Roboto"} size={"small"} variant={"contained"} color={"info"}
-                                                                    onClick={() => navigateToForm(item)}>Accéder</Button>
+                                                            <Flex direction={"row"} alignItems={'center'}>
+                                                                    <IconButton onClick={() => navigateToSignature(item, item.date, item.date_fin)}><Assignment sx={{color: 'black'}}/></IconButton>
+                                                                <Button fontFamily={"Roboto"} size={"small"}
+                                                                        variant={"contained"} color={"info"}
+                                                                        disabled={props.submitted}
+                                                                        onClick={() => navigateToForm(item)}>Accéder</Button>
+                                                            </Flex>
                                                             :
                                                             <Button fontFamily={"Roboto"}
                                                                     color={"success"}

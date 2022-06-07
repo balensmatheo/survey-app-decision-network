@@ -1,14 +1,16 @@
-import {Typography, Button, Box, Divider, CardContent, Card} from "@mui/material";
+import {Typography, Button, Box, Divider, CardContent, Card, CardActions} from "@mui/material";
 import {Storage} from "aws-amplify";
 import React, {useState} from "react"
 import {useEffect} from "react";
 import {AmplifyS3Image} from "@aws-amplify/ui-react/legacy";
+import {Delete} from "@mui/icons-material";
 
 function MySignatures(){
 
     useEffect(() => {
         listSignatures().then();
     }, [])
+
 
     const [signatures, setSignatures] = useState([]);
 
@@ -19,8 +21,6 @@ function MySignatures(){
             .catch(err => console.log(err));
     }
 
-
-
     return(
         <Box sx={{
             display: 'flex',
@@ -29,16 +29,14 @@ function MySignatures(){
         }}>
             <Typography mb={1} variant={"h4"} fontWeight={300} fontSize={"calc(11px + 2.2vmin)"}>Voici vos signatures :</Typography>
             <Divider/>
-            <Box sx={{display: 'flex', flexDirection:'row', marginTop: '2em'}}>
+            <Box sx={{display: 'flex', flexDirection:'column', marginTop: '2em', marginBottom: '2em'}}>
                 {
                     signatures.length>0 ?
                         signatures.map((signature, index) => (
-                            <Card sx={{ maxWidth: 456, marginRight: "1em"}} elevation={4} key={index}>
+                            <Card sx={{ maxWidth: 456, marginBottom: "1em"}} elevation={4} key={index}>
                                 <CardContent>
-                                    <Typography variant={"body2"}>{signature.key}</Typography>
                                     <AmplifyS3Image level={"private"} imgKey={signature.key}/>
                                 </CardContent>
-
                             </Card>
                         ))
                         :

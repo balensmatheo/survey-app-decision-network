@@ -4,6 +4,10 @@ import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplif
 
 
 
+type SignaturesMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type CategorieMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -22,6 +26,16 @@ type FormulaireMetaData = {
 
 type FormationMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+export declare class Signatures {
+  readonly id: string;
+  readonly filename?: string | null;
+  readonly formulaireID: string;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  constructor(init: ModelInit<Signatures, SignaturesMetaData>);
+  static copyOf(source: Signatures, mutator: (draft: MutableModel<Signatures, SignaturesMetaData>) => MutableModel<Signatures, SignaturesMetaData> | void): Signatures;
 }
 
 export declare class Categorie {
@@ -65,7 +79,7 @@ export declare class Formulaire {
   readonly email?: string | null;
   readonly formationID: string;
   readonly remarques?: string | null;
-  readonly signature?: string | null;
+  readonly Signatures?: (Signatures | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   constructor(init: ModelInit<Formulaire, FormulaireMetaData>);

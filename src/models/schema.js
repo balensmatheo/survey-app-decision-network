@@ -1,5 +1,80 @@
 export const schema = {
     "models": {
+        "Signatures": {
+            "name": "Signatures",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "filename": {
+                    "name": "filename",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "formulaireID": {
+                    "name": "formulaireID",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Signatures",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byFormulaire",
+                        "fields": [
+                            "formulaireID"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Categorie": {
             "name": "Categorie",
             "fields": {
@@ -303,12 +378,19 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "signature": {
-                    "name": "signature",
-                    "isArray": false,
-                    "type": "String",
+                "Signatures": {
+                    "name": "Signatures",
+                    "isArray": true,
+                    "type": {
+                        "model": "Signatures"
+                    },
                     "isRequired": false,
-                    "attributes": []
+                    "attributes": [],
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": "formulaireID"
+                    }
                 },
                 "createdAt": {
                     "name": "createdAt",
@@ -480,5 +562,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "283b77cc760531a866b5c171111996bc"
+    "version": "c22dc5c4487ab3bc0247736fdded9931"
 };

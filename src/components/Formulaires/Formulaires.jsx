@@ -1,15 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import {NavLink, useLocation, useNavigate} from "react-router-dom";
-import {Button, Card, Collection, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
+import {Collection,Button, Divider, Flex, Heading, TabItem, Tabs, Text,} from "@aws-amplify/ui-react";
 import Reponse from "../Reponses/Reponse"
 import "./formulaires.css"
 import {Auth, DataStore} from "aws-amplify";
 import {Categorie, Formation, Formulaire, Questions, Reponses} from "../../models";
-import Signature from "../Signature/Signature";
-import {Box, Checkbox, TextField, Tooltip} from "@mui/material";
+import {Box, Card, Checkbox, TextField, Tooltip} from "@mui/material";
 import InfoIcon from '@mui/icons-material/Info';
 import ReactLoading from "react-loading";
-import NewReleasesIcon from '@mui/icons-material/NewReleases';
 
 const initialState = {nom: '', prenom: '', societe: '', commentaires: ''}
 
@@ -24,8 +22,9 @@ function Formulaires(props) {
     }, [])
 
     const [submitted, setSubmitted] = useState(false);
-    const [loading, setLoading] = useState(false)
-    const [categories, setCategories] = useState([])
+    const [loading, setLoading] = useState(false);
+    const [categories, setCategories] = useState([]);
+
     async function fetchFormulaires() {
         try {
             // On récupère les formulaires soumis pas l'utilisateurs.
@@ -160,14 +159,6 @@ function Formulaires(props) {
         setChecked(event.target.checked);
     };
 
-    const [index, setIndex] = useState(0);
-
-    const [signature, setSignature] = useState("");
-
-    function getSignature(value) {
-        setSignature(value)
-        console.log(value)
-    }
 
     if (loading === true) {
         return (
@@ -188,8 +179,6 @@ function Formulaires(props) {
                     }}><Button variation={"link"}>Retourner à l'accueil</Button></NavLink>
                 </Flex>
             </Flex>
-
-
         )
     } else {
 
@@ -203,14 +192,6 @@ function Formulaires(props) {
                             désinscrire ?</Button>
                     </div>
                     <Divider></Divider>
-                    <Tabs currentIndex={index} onChange={(i) => setIndex(i)} marginTop={"1em"}
-                          justifyContent={"flex-start"}
-                          spacing={"equal"}>
-                        <TabItem title={
-                            <Flex direction={"row"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
-                                <Text fontFamily={"Roboto"}>Satisfaction</Text>
-                            </Flex>
-                        }>
                             <div className={'formulaire'}>
                                 <Flex width={"100%"} position={"absolute"} direction={"row"} justifyContent={"flex-end"}
                                       alignItems={"flex-end"} paddingRight={"2em"}>
@@ -259,7 +240,6 @@ function Formulaires(props) {
                                                 label="Société*"
                                             />
                                         </Flex>
-
                                     </Box>
                                 </div>
 
@@ -279,7 +259,7 @@ function Formulaires(props) {
                                                     <Collection width={"100%"} marginTop={"2em"} items={questions}>
                                                         {(item, index) => (
                                                             item.questionsCategorieId === categorie.id ?
-                                                                <Card width={"100%"} marginBottom={"1em"}
+                                                                <Card sx={{padding: '1em'}} width={"100%"} marginBottom={"1em"}
                                                                       boxShadow={"-4px 4px 5px 1px whitesmoke"}
                                                                       key={index}>
                                                                     <Flex direction={"row"} width={"100%"}
@@ -305,6 +285,7 @@ function Formulaires(props) {
                                         }
                                     </Tabs>
                                 </Flex>
+
 
                                 <Box className={"remarques"} sx={{
                                     display: 'flex',
@@ -342,39 +323,6 @@ function Formulaires(props) {
                                 </Flex>
 
                             </div>
-                        </TabItem>
-                        {
-                            signature === "" ?
-                                <TabItem title={
-                                    <Flex direction={"row"} width={"100%"} alignItems={"center"}
-                                          justifyContent={"center"}>
-                                        <Text fontFamily={"Roboto"}>Signature</Text>
-                                        <Tooltip title={"Veuillez signer s.v.p"} arrow>
-                                            <NewReleasesIcon className={"testicon"} fontSize={"small"}
-                                                             sx={{color: "#0d8505"}}/>
-                                        </Tooltip>
-                                    </Flex>
-                                }>
-                                    <Signature getSignature={getSignature} user={Auth.user}/>
-                                    <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
-                                          justifyContent={"flex-start"} alignItems={"center"}>
-                                    </Flex>
-                                </TabItem>
-                                :
-                                <TabItem disabled={true} title={
-                                    <Flex direction={"row"} width={"100%"} alignItems={"center"}
-                                          justifyContent={"center"}>
-                                        <Text fontFamily={"Roboto"}>Signature</Text>
-                                    </Flex>
-                                }>
-                                    <Signature getSignature={getSignature} user={Auth.user}/>
-                                    <Flex direction={"row"} paddingLeft={"2em"} position={"fixed"} width={"100%"}
-                                          justifyContent={"flex-start"} alignItems={"center"}>
-                                    </Flex>
-                                </TabItem>
-
-                        }
-                    </Tabs>
                 </div>
             </>
         )

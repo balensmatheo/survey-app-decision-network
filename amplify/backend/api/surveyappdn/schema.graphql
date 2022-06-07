@@ -1,5 +1,7 @@
-input AMPLIFY {
-  globalAuthRule: AuthRule = {allow: public}
+type Signatures @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  filename: String
+  formulaireID: ID! @index(name: "byFormulaire")
 }
 
 type Categorie @model @auth(rules: [{allow: public}]) {
@@ -30,7 +32,7 @@ type Formulaire @model @auth(rules: [{allow: public}]) {
   email: String
   formationID: ID! @index(name: "byFormation")
   remarques: String
-  signature: String
+  Signatures: [Signatures] @hasMany(indexName: "byFormulaire", fields: ["id"])
 }
 
 type Formation @model @auth(rules: [{allow: public}]) {
@@ -42,4 +44,5 @@ type Formation @model @auth(rules: [{allow: public}]) {
   Formulaires: [Formulaire] @hasMany(indexName: "byFormation", fields: ["id"])
   participants: [AWSEmail]
   Reponses: [Reponses] @hasMany(indexName: "byFormation", fields: ["id"])
-} 
+}
+ 
